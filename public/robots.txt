@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luscaarmstrong1.github.io/reno-compartilha/sitemap.xml
