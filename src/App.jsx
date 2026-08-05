@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import ArrowRight from "lucide-react/dist/esm/icons/arrow-right.js";
 import BadgeCheck from "lucide-react/dist/esm/icons/badge-check.js";
 import Building2 from "lucide-react/dist/esm/icons/building-2.js";
-import Calculator from "lucide-react/dist/esm/icons/calculator.js";
 import Check from "lucide-react/dist/esm/icons/check.js";
 import ChevronDown from "lucide-react/dist/esm/icons/chevron-down.js";
 import ClipboardCheck from "lucide-react/dist/esm/icons/clipboard-check.js";
@@ -13,10 +12,8 @@ import Mail from "lucide-react/dist/esm/icons/mail.js";
 import Menu from "lucide-react/dist/esm/icons/menu.js";
 import MessageCircle from "lucide-react/dist/esm/icons/message-circle.js";
 import PanelsTopLeft from "lucide-react/dist/esm/icons/panels-top-left.js";
-import PlugZap from "lucide-react/dist/esm/icons/plug-zap.js";
 import ReceiptText from "lucide-react/dist/esm/icons/receipt-text.js";
 import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
-import SunMedium from "lucide-react/dist/esm/icons/sun-medium.js";
 import UploadCloud from "lucide-react/dist/esm/icons/upload-cloud.js";
 import X from "lucide-react/dist/esm/icons/x.js";
 import { analyticsEvents, siteConfig } from "./config/siteConfig";
@@ -32,42 +29,38 @@ const navItems = [
 const benefits = [
   {
     icon: PanelsTopLeft,
-    kicker: "Sem obra",
-    title: "Não precisa instalar placas",
-    text: "A participação não exige obra, alteração do telhado ou instalação de equipamentos fotovoltaicos no imóvel."
+    title: "Sem instalação",
+    text: "Não é necessário realizar obras ou instalar equipamentos fotovoltaicos no imóvel."
   },
   {
     icon: Factory,
-    kicker: "Sem compra do sistema",
-    title: "Não precisa comprar uma usina",
-    text: "O consumidor não precisa adquirir módulos, inversores ou financiar uma instalação própria."
+    title: "Sem compra do sistema",
+    text: "Você não precisa comprar módulos, inversores ou financiar uma usina própria."
   },
   {
     icon: ClipboardCheck,
-    kicker: "Acompanhamento",
-    title: "Gestão feita pela Renovera",
-    text: "A Renovera acompanha cadastro, compensação, faturas, atendimento e eventuais inconsistências."
+    title: "Processo acompanhado",
+    text: "A Renovera acompanha cadastro, compensação, faturas e eventuais inconsistências."
   },
   {
     icon: ReceiptText,
-    kicker: "Economia projetada",
-    title: "Redução analisada pela sua conta",
-    text: "A estimativa considera consumo, tarifa, distribuidora e condições disponíveis."
+    title: "Análise individual",
+    text: "As condições são avaliadas pela conta, região, distribuidora e consumo."
   }
 ];
 
 const steps = [
   {
     title: "Envie sua conta",
-    text: "Verificamos consumo, titularidade, distribuidora, região e características da unidade consumidora."
+    text: "Analisamos consumo, região, distribuidora, titularidade e características da unidade."
   },
   {
-    title: "Receba a análise",
-    text: "Apresentamos estimativa de economia, condições, valores, prazos e funcionamento da operação."
+    title: "Receba as condições",
+    text: "Apresentamos funcionamento, prazos, valores e estimativa aplicável ao seu caso."
   },
   {
-    title: "Comece a compensar",
-    text: "Após adesão e cadastro, a distribuidora passa a considerar os créditos na unidade participante."
+    title: "Inicie a compensação",
+    text: "Após adesão e cadastro, a distribuidora poderá registrar os créditos na unidade participante."
   }
 ];
 
@@ -75,64 +68,45 @@ const audiences = [
   {
     title: "Empresas",
     icon: Building2,
-    text: "Para comércios e empresas que desejam reduzir custos sem imobilizar capital em uma instalação própria.",
-    examples: ["lojas", "mercados", "escritórios", "clínicas", "academias", "restaurantes", "hotéis", "pequenas indústrias", "múltiplas unidades"],
-    benefits: ["ausência de obra", "análise de várias unidades", "acompanhamento das faturas", "previsibilidade contratual"],
+    text: "Uma alternativa para negócios que desejam reduzir custos sem imobilizar capital em uma instalação própria.",
+    benefits: ["sem obra no estabelecimento", "análise de várias unidades", "acompanhamento das faturas", "atendimento especializado"],
     cta: "Analisar conta da empresa",
     event: analyticsEvents.businessAnalysisClick
   },
   {
     title: "Residências",
     icon: Home,
-    text: "Para consumidores que moram em apartamentos, imóveis alugados ou locais sem condições adequadas para instalar um sistema próprio.",
-    examples: ["apartamentos", "imóveis alugados", "casas sem telhado adequado", "famílias que buscam simplicidade"],
-    benefits: ["sem alteração do imóvel", "sem financiamento do sistema", "processo de adesão simplificado", "acompanhamento da Renovera"],
+    text: "Para casas, apartamentos e imóveis alugados sem condições ou interesse em instalar um sistema próprio.",
+    benefits: ["sem alteração do imóvel", "sem financiamento", "processo simplificado", "acompanhamento da Renovera"],
     cta: "Analisar conta residencial",
     event: analyticsEvents.residentialAnalysisClick
   }
 ];
 
-const eligibilityItems = [
-  "distribuidora",
-  "cidade e estado",
-  "titularidade",
-  "classe de consumo",
-  "histórico de consumo",
-  "valor médio",
-  "quantidade de unidades",
-  "modalidade tarifária",
-  "benefícios existentes",
-  "disponibilidade"
-];
-
 const faqItems = [
   {
-    question: "Preciso instalar placas no meu imóvel?",
-    answer: "Não. Na geração compartilhada, a usina fica em outro local e a distribuidora registra a compensação na unidade participante."
+    question: "Preciso instalar placas?",
+    answer: "Não. A usina fica em outro local e a distribuidora registra a compensação na unidade participante."
   },
   {
     question: "Preciso comprar equipamentos?",
-    answer: "Não é necessário adquirir módulos, inversores ou uma usina própria para participar da operação."
+    answer: "Não é necessário adquirir módulos, inversores ou uma usina própria para participar."
   },
   {
-    question: "Vou continuar recebendo a conta da distribuidora?",
+    question: "Continuarei recebendo a conta da distribuidora?",
     answer: "Sim. O fornecimento continua sendo realizado pela distribuidora e a fatura continuará sendo emitida."
   },
   {
     question: "Existe outra cobrança?",
-    answer: "Conforme o modelo contratado, poderá existir uma cobrança separada relacionada à participação na geração compartilhada. As condições serão apresentadas antes da adesão."
+    answer: "Conforme o modelo contratado, poderá existir uma cobrança separada relacionada à participação na geração compartilhada."
   },
   {
     question: "A economia é garantida?",
-    answer: "Não. A estimativa depende do consumo, da geração, das tarifas, dos tributos, da distribuidora e das condições da operação."
-  },
-  {
-    question: "Quanto tempo demora para começar?",
-    answer: "O prazo depende da documentação, do cadastro, da distribuidora e do ciclo de faturamento."
+    answer: "Não. A estimativa depende de consumo, geração, tarifas, tributos, distribuidora e condições disponíveis."
   },
   {
     question: "Toda conta pode participar?",
-    answer: "Não necessariamente. A unidade precisa passar por análise de região, distribuidora, consumo, titularidade e demais condições aplicáveis."
+    answer: "Não necessariamente. A unidade precisa passar por análise de região, distribuidora, consumo e titularidade."
   }
 ];
 
@@ -156,7 +130,7 @@ const requiredFields = {
   email: "Informe um e-mail válido.",
   city: "Informe sua cidade.",
   state: "Informe o estado.",
-  profile: "Selecione o perfil do consumidor.",
+  profile: "Selecione o perfil.",
   distributor: "Informe a distribuidora.",
   billValue: "Informe o valor médio da conta.",
   unitType: "Selecione o tipo de unidade.",
@@ -169,22 +143,25 @@ function track(eventName) {
   }
 }
 
+function scrollToAnalysis() {
+  document.getElementById("analise")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function getWhatsappHref(messageType = "residential") {
   const message = siteConfig.whatsappMessages[messageType] ?? siteConfig.whatsappMessages.residential;
-  if (!siteConfig.whatsapp) {
-    return "#analise";
-  }
+  if (!siteConfig.whatsapp) return "#analise";
   const number = siteConfig.whatsapp.replace(/\D/g, "");
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
-function ButtonLink({ children, href = "#analise", variant = "primary", icon: Icon = ArrowRight, eventName, className = "" }) {
+function ButtonLink({ children, href = "#analise", variant = "primary", icon: Icon = ArrowRight, eventName, className = "", onClick }) {
   return (
     <a
       className={`btn btn-${variant} ${className}`}
       href={href}
-      onClick={() => {
+      onClick={(event) => {
         if (eventName) track(eventName);
+        if (onClick) onClick(event);
       }}
     >
       <span>{children}</span>
@@ -201,9 +178,7 @@ function Header() {
   useEffect(() => {
     document.body.classList.toggle("menu-locked", open);
     if (!open) return undefined;
-
-    const firstLink = drawerRef.current?.querySelector("a, button");
-    firstLink?.focus();
+    drawerRef.current?.querySelector("a, button")?.focus();
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -211,7 +186,6 @@ function Header() {
         toggleRef.current?.focus();
       }
     };
-
     const onPointerDown = (event) => {
       if (!drawerRef.current?.contains(event.target) && !toggleRef.current?.contains(event.target)) {
         setOpen(false);
@@ -237,17 +211,12 @@ function Header() {
           <img src="./renovera-logo.png" width="178" height="43" alt="Renovera" />
           <span>Renô Compartilha</span>
         </a>
-
         <div className="nav-links" aria-label="Menu principal">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href}>{item.label}</a>
-          ))}
+          {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
         </div>
-
         <ButtonLink className="nav-cta" href="#analise" variant="gold" icon={FileSearch}>
           Analisar minha conta
         </ButtonLink>
-
         <button
           className="menu-toggle"
           type="button"
@@ -260,7 +229,6 @@ function Header() {
           {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
       </nav>
-
       <div className={`mobile-backdrop ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="mobile-menu" id="mobile-menu" ref={drawerRef}>
           <div className="mobile-menu-top">
@@ -269,9 +237,7 @@ function Header() {
               <X aria-hidden="true" />
             </button>
           </div>
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={closeMenu}>{item.label}</a>
-          ))}
+          {navItems.map((item) => <a key={item.href} href={item.href} onClick={closeMenu}>{item.label}</a>)}
           <ButtonLink href="#analise" variant="gold" icon={FileSearch} className="mobile-cta">
             Analisar minha conta
           </ButtonLink>
@@ -289,10 +255,10 @@ function Hero() {
           <p className="eyebrow">Energia solar sem instalação no imóvel</p>
           <h1>Economize com energia solar sem instalar placas</h1>
           <p className="lead">
-            Envie sua conta de energia e descubra se sua empresa ou residência pode participar de uma operação de geração compartilhada.
+            Envie sua conta e descubra se sua empresa ou residência pode participar da geração solar compartilhada.
           </p>
           <p className="support">
-            A energia é produzida em uma usina remota, os créditos são compensados pela distribuidora e a Renovera acompanha todo o processo.
+            A energia é gerada em uma usina remota, a distribuidora registra a compensação e a Renovera acompanha o processo.
           </p>
           <div className="hero-actions">
             <ButtonLink href="#analise" eventName={analyticsEvents.heroAnalysisClick} icon={FileSearch}>
@@ -303,7 +269,7 @@ function Hero() {
             </ButtonLink>
           </div>
           <p className="microcopy">
-            Análise inicial sem compromisso. Sujeita à região, distribuidora, perfil de consumo e disponibilidade.
+            Análise inicial sem compromisso, sujeita à região, à distribuidora, ao perfil de consumo e à disponibilidade.
           </p>
           <ul className="quick-list" aria-label="Benefícios rápidos">
             <li><Check aria-hidden="true" /> sem obra no imóvel</li>
@@ -331,9 +297,9 @@ function Hero() {
 function TrustBar() {
   const items = [
     ["sem instalação no imóvel", PanelsTopLeft],
-    ["análise da sua fatura", FileSearch],
-    ["acompanhamento mensal", ClipboardCheck],
-    ["suporte especializado", ShieldCheck]
+    ["análise individual da conta", FileSearch],
+    ["atendimento especializado", ShieldCheck],
+    ["acompanhamento mensal", ClipboardCheck]
   ];
 
   return (
@@ -350,6 +316,146 @@ function TrustBar() {
   );
 }
 
+function Qualifier({ onComplete }) {
+  const [step, setStep] = useState(0);
+  const [data, setData] = useState({ profile: "", billValue: "", state: "", distributor: "" });
+  const resultRef = useRef(null);
+
+  const setValue = (name, value) => {
+    setData((current) => ({ ...current, [name]: value }));
+    track(analyticsEvents.qualifierStart);
+  };
+
+  const canContinue = step === 0 ? data.profile : step === 1 ? data.billValue : data.state.trim();
+
+  const next = () => {
+    if (!canContinue) return;
+    if (step < 2) {
+      setStep((current) => current + 1);
+      return;
+    }
+    onComplete(data, false);
+    track(analyticsEvents.qualifierComplete);
+    window.setTimeout(() => resultRef.current?.focus(), 50);
+  };
+
+  const sendToForm = () => onComplete(data, true);
+  const whatsappType = data.profile === "Empresa" ? "business" : "residential";
+
+  return (
+    <section id="qualificador" className="section qualifier-section">
+      <div className="container qualifier-layout">
+        <div className="section-heading left">
+          <p className="eyebrow">Qualificador</p>
+          <h2>Descubra se sua conta pode ser analisada</h2>
+          <p>Responda três passos rápidos. O resultado não é aprovação automática: ele encaminha sua conta para análise individual.</p>
+        </div>
+        <div className="qualifier-card">
+          <div
+            className="progress-row"
+            role="progressbar"
+            aria-label={`Passo ${step + 1} de 3`}
+            aria-valuemin="1"
+            aria-valuemax="3"
+            aria-valuenow={step + 1}
+          >
+            {[0, 1, 2].map((item) => (
+              <span key={item} className={item <= step ? "is-active" : ""} />
+            ))}
+          </div>
+
+          {step === 0 ? (
+            <fieldset>
+              <legend>Para quem é a conta?</legend>
+              <div className="choice-grid">
+                {["Empresa", "Residência"].map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    className={data.profile === option ? "choice is-selected" : "choice"}
+                    onClick={() => setValue("profile", option)}
+                  >
+                    {option === "Empresa" ? <Building2 aria-hidden="true" /> : <Home aria-hidden="true" />}
+                    <span>{option}</span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+          ) : null}
+
+          {step === 1 ? (
+            <fieldset>
+              <legend>Qual é o valor médio mensal?</legend>
+              <div className="range-grid">
+                {siteConfig.billRanges.map((range) => (
+                  <button
+                    key={range}
+                    type="button"
+                    className={data.billValue === range ? "choice is-selected" : "choice"}
+                    onClick={() => setValue("billValue", range)}
+                  >
+                    <span>{range}</span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+          ) : null}
+
+          {step === 2 ? (
+            <fieldset>
+              <legend>Em qual região está a unidade?</legend>
+              <div className="qualifier-fields">
+                <label>
+                  Estado
+                  <input
+                    value={data.state}
+                    onChange={(event) => setValue("state", event.target.value.toUpperCase().slice(0, 2))}
+                    maxLength="2"
+                    autoComplete="address-level1"
+                    aria-label="Estado da unidade consumidora"
+                  />
+                </label>
+                <label>
+                  Distribuidora, se conhecida
+                  <input
+                    value={data.distributor}
+                    onChange={(event) => setValue("distributor", event.target.value)}
+                    autoComplete="organization"
+                  />
+                </label>
+              </div>
+            </fieldset>
+          ) : null}
+
+          <div className="qualifier-actions">
+            <button className="btn btn-outline" type="button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0}>
+              Voltar
+            </button>
+            <button className="btn btn-primary" type="button" onClick={next} disabled={!canContinue}>
+              {step === 2 ? "Ver resultado" : "Continuar"} <ArrowRight aria-hidden="true" size={18} />
+            </button>
+          </div>
+
+          {data.profile && data.billValue && data.state ? (
+            <div className="qualifier-result" tabIndex="-1" ref={resultRef}>
+              <h3>Sua conta pode seguir para uma análise individual</h3>
+              <p>A elegibilidade depende da distribuidora, do consumo, da região, da titularidade e das condições disponíveis.</p>
+              <div className="hero-actions compact">
+                <button className="btn btn-gold" type="button" onClick={sendToForm}>
+                  Analisar minha conta <FileSearch aria-hidden="true" size={18} />
+                </button>
+                <ButtonLink href={getWhatsappHref(whatsappType)} variant="outline" icon={MessageCircle} eventName={analyticsEvents.whatsappClick}>
+                  Falar pelo WhatsApp
+                </ButtonLink>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Benefits() {
   return (
     <section id="beneficios" className="section">
@@ -357,15 +463,11 @@ function Benefits() {
         <div className="section-heading">
           <p className="eyebrow">Benefícios</p>
           <h2>Energia solar de um jeito mais simples</h2>
-          <p>
-            A geração compartilhada permite aproveitar a energia produzida em uma usina remota, sem precisar comprar ou instalar um sistema fotovoltaico no seu imóvel.
-          </p>
         </div>
         <div className="benefit-grid">
-          {benefits.map(({ icon: Icon, kicker, title, text }) => (
+          {benefits.map(({ icon: Icon, title, text }) => (
             <article className="card benefit-card" key={title}>
               <div className="card-icon"><Icon aria-hidden="true" /></div>
-              <p className="card-kicker">{kicker}</p>
               <h3>{title}</h3>
               <p>{text}</p>
             </article>
@@ -382,78 +484,56 @@ function HowItWorks() {
       <div className="container">
         <div className="section-heading">
           <p className="eyebrow">Como funciona</p>
-          <h2>Como funciona a energia solar compartilhada</h2>
+          <h2>Como funciona</h2>
         </div>
         <div className="steps">
-          {steps.map((step, index) => (
-            <article className="step" key={step.title}>
+          {steps.map((item, index) => (
+            <article className="step" key={item.title}>
               <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
             </article>
           ))}
         </div>
-        <p className="note">O prazo de ativação depende do cadastro, da distribuidora e do ciclo de faturamento.</p>
+        <p className="note">O prazo depende da documentação, da distribuidora e do ciclo de faturamento.</p>
       </div>
     </section>
   );
 }
 
-function Audience() {
+function Audience({ onAudienceClick }) {
   return (
     <section id="para-quem" className="section">
       <div className="container">
         <div className="section-heading">
-          <p className="eyebrow">Para quem é</p>
-          <h2>Uma alternativa para quem não quer ou não pode instalar placas</h2>
+          <p className="eyebrow">Empresas e residências</p>
+          <h2>Para quem não quer ou não pode instalar placas</h2>
         </div>
         <div className="audience-grid">
-          {audiences.map(({ title, icon: Icon, text, examples, benefits: audienceBenefits, cta, event }) => (
+          {audiences.map(({ title, icon: Icon, text, benefits: audienceBenefits, cta, event }) => (
             <article className="card audience-card" key={title}>
               <div className="audience-title">
                 <Icon aria-hidden="true" />
                 <h3>{title}</h3>
               </div>
               <p>{text}</p>
-              <div className="pill-list" aria-label={`Exemplos para ${title}`}>
-                {examples.map((example) => <span key={example}>{example}</span>)}
-              </div>
               <ul className="check-list">
-                {audienceBenefits.map((item) => (
-                  <li key={item}><Check aria-hidden="true" /> {item}</li>
-                ))}
+                {audienceBenefits.map((item) => <li key={item}><Check aria-hidden="true" /> {item}</li>)}
               </ul>
-              <ButtonLink href="#analise" eventName={event} icon={FileSearch}>{cta}</ButtonLink>
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={() => {
+                  track(event);
+                  onAudienceClick(title);
+                }}
+              >
+                {cta} <FileSearch aria-hidden="true" size={18} />
+              </button>
             </article>
           ))}
         </div>
-        <p className="center-note">Também analisamos condomínios, propriedades rurais e grupos com múltiplas unidades consumidoras.</p>
-      </div>
-    </section>
-  );
-}
-
-function NoPanelsBand() {
-  return (
-    <section className="solar-flow">
-      <div className="container flow-grid">
-        <div>
-          <p className="eyebrow">Sem placas no seu endereço</p>
-          <h2>Seu imóvel não precisa ter placas para utilizar energia solar</h2>
-          <p>
-            A usina pode estar localizada em outro endereço dentro da área de atendimento da distribuidora. A compensação é registrada na conta da unidade participante.
-          </p>
-        </div>
-        <div className="flow-illustration" aria-label="Fluxo entre usina remota, distribuidora, empresa e residência">
-          <div className="flow-node"><SunMedium aria-hidden="true" /><span>Usina remota</span></div>
-          <div className="flow-line" aria-hidden="true" />
-          <div className="flow-node"><PlugZap aria-hidden="true" /><span>Distribuidora</span></div>
-          <div className="flow-line" aria-hidden="true" />
-          <div className="flow-stack">
-            <div className="flow-node"><Building2 aria-hidden="true" /><span>Empresa</span></div>
-            <div className="flow-node"><Home aria-hidden="true" /><span>Residência</span></div>
-          </div>
-        </div>
+        <p className="center-note">Também analisamos condomínios, propriedades rurais e grupos com múltiplas unidades.</p>
       </div>
     </section>
   );
@@ -461,130 +541,25 @@ function NoPanelsBand() {
 
 function BillSection() {
   return (
-    <section id="conta" className="section">
+    <section id="conta" className="section bill-section">
       <div className="container">
         <div className="section-heading">
-          <p className="eyebrow">Na fatura</p>
+          <p className="eyebrow">Na conta</p>
           <h2>O que muda depois da adesão?</h2>
         </div>
         <div className="bill-grid">
           <article className="card">
             <div className="card-icon"><ReceiptText aria-hidden="true" /></div>
             <h3>Fatura da distribuidora</h3>
-            <p>
-              O fornecimento continua sendo realizado normalmente pela distribuidora. A fatura poderá apresentar a compensação dos créditos e os demais valores que continuam sendo cobrados.
-            </p>
-            <ul className="plain-list">
-              <li>consumo e créditos compensados</li>
-              <li>custo de disponibilidade ou demanda</li>
-              <li>iluminação pública, tributos e parcelas aplicáveis</li>
-            </ul>
+            <p>O fornecimento continua sendo realizado pela distribuidora. A conta poderá apresentar a compensação e os demais valores aplicáveis à unidade.</p>
           </article>
           <article className="card">
             <div className="card-icon"><BadgeCheck aria-hidden="true" /></div>
-            <h3>Cobrança da participação</h3>
-            <p>
-              Conforme as condições contratadas, o participante poderá receber uma cobrança separada relacionada à sua participação na operação de geração compartilhada.
-            </p>
-            <p className="note-inline">
-              A proposta deverá apresentar de forma clara a composição estimada do custo total e da economia.
-            </p>
+            <h3>Participação na geração compartilhada</h3>
+            <p>Conforme as condições contratadas, poderá existir uma cobrança separada relacionada à participação na operação.</p>
           </article>
         </div>
-        <p className="warning">Os valores e a economia podem variar conforme consumo, geração, tarifas, tributos e regras da distribuidora.</p>
-      </div>
-    </section>
-  );
-}
-
-function EligibilityCalculator() {
-  const [values, setValues] = useState({
-    consumerType: "",
-    billAverage: "",
-    calcState: "",
-    calcDistributor: "",
-    calcConsumption: ""
-  });
-  const [result, setResult] = useState("");
-
-  const update = (event) => {
-    const { name, value } = event.target;
-    setValues((current) => ({ ...current, [name]: value }));
-    track(analyticsEvents.calculatorStart);
-  };
-
-  const handleEstimate = (event) => {
-    event.preventDefault();
-    const amount = Number(values.billAverage.replace(/\D/g, "")) / 100;
-    if (!values.consumerType || !values.billAverage || !values.calcState) {
-      setResult("Preencha tipo de consumidor, valor médio da conta e estado para fazer a triagem inicial.");
-      return;
-    }
-    track(analyticsEvents.calculatorComplete);
-    if (amount > 0) {
-      setResult("Sua conta pode ser elegível para uma análise de geração compartilhada. Envie a fatura para validação da região, distribuidora e perfil de consumo.");
-      return;
-    }
-    setResult("Sua conta precisa ser analisada pela equipe Renovera para verificar elegibilidade e disponibilidade.");
-  };
-
-  return (
-    <form className="calculator" onSubmit={handleEstimate} aria-labelledby="calculator-title">
-      <div className="calculator-title">
-        <Calculator aria-hidden="true" />
-        <h3 id="calculator-title">Faça uma estimativa inicial</h3>
-      </div>
-      <div className="calc-grid">
-        <label>
-          Tipo de consumidor
-          <select name="consumerType" value={values.consumerType} onChange={update}>
-            <option value="">Selecione</option>
-            <option>Empresa</option>
-            <option>Residência</option>
-            <option>Condomínio</option>
-            <option>Propriedade rural</option>
-            <option>Múltiplas unidades</option>
-          </select>
-        </label>
-        <label>
-          Valor médio da conta
-          <input name="billAverage" value={values.billAverage} onChange={update} inputMode="decimal" placeholder="R$ 0,00" />
-        </label>
-        <label>
-          Estado
-          <input name="calcState" value={values.calcState} onChange={update} maxLength="2" autoComplete="address-level1" />
-        </label>
-        <label>
-          Distribuidora, se conhecida
-          <input name="calcDistributor" value={values.calcDistributor} onChange={update} autoComplete="organization" />
-        </label>
-        <label>
-          Consumo médio em kWh
-          <input name="calcConsumption" value={values.calcConsumption} onChange={update} inputMode="numeric" />
-        </label>
-      </div>
-      <button className="btn btn-primary" type="submit">Verificar elegibilidade <ArrowRight aria-hidden="true" size={18} /></button>
-      {result ? <p className="calc-result" role="status">{result}</p> : null}
-      <p className="microcopy">Resultado ilustrativo. A estimativa final depende da análise das faturas, tarifas aplicáveis e condições disponíveis.</p>
-    </form>
-  );
-}
-
-function Eligibility() {
-  return (
-    <section id="elegibilidade" className="section section-soft">
-      <div className="container eligibility-layout">
-        <div>
-          <p className="eyebrow">Análise de elegibilidade</p>
-          <h2>O que analisamos na sua conta</h2>
-          <div className="eligibility-list">
-            {eligibilityItems.map((item) => <span key={item}><Check aria-hidden="true" /> {item}</span>)}
-          </div>
-          <p className="warning light">
-            A análise é necessária porque nem todas as unidades possuem as mesmas condições tarifárias, cadastrais ou regulatórias.
-          </p>
-        </div>
-        <EligibilityCalculator />
+        <p className="warning">Os valores podem variar conforme consumo, geração, tarifas, tributos e regras da distribuidora.</p>
       </div>
     </section>
   );
@@ -603,20 +578,13 @@ function validateForm(values) {
   Object.entries(requiredFields).forEach(([field, message]) => {
     if (!String(values[field] ?? "").trim()) errors[field] = message;
   });
-  if (values.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-    errors.email = "Informe um e-mail válido.";
-  }
-  if (values.phone && values.phone.replace(/\D/g, "").length < 10) {
-    errors.phone = "Informe um telefone com DDD.";
-  }
-  if (!values.consent) {
-    errors.consent = "Você precisa autorizar o uso dos dados para contato e análise.";
-  }
+  if (values.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) errors.email = "Informe um e-mail válido.";
+  if (values.phone && values.phone.replace(/\D/g, "").length < 10) errors.phone = "Informe um telefone com DDD.";
+  if (!values.consent) errors.consent = "Você precisa autorizar o uso dos dados para contato e análise.";
   return errors;
 }
 
-function AnalysisForm() {
-  const [values, setValues] = useState(initialForm);
+function AnalysisForm({ values, setValues }) {
   const [errors, setErrors] = useState({});
   const [stage, setStage] = useState("editing");
   const [status, setStatus] = useState("");
@@ -625,15 +593,7 @@ function AnalysisForm() {
 
   const profileOptions = ["Empresa", "Residência", "Condomínio", "Propriedade rural", "Múltiplas unidades", "Outro"];
   const unitOptions = ["Imóvel próprio", "Imóvel alugado", "Apartamento", "Estabelecimento comercial", "Unidade rural", "Condomínio", "Outro"];
-  const interestOptions = [
-    "reduzir os custos de energia",
-    "utilizar energia solar sem instalar placas",
-    "analisar várias unidades",
-    "entender como funciona",
-    "comparar com instalação própria",
-    "outro"
-  ];
-
+  const interestOptions = ["Reduzir custos", "Utilizar energia solar sem placas", "Analisar várias unidades", "Entender o funcionamento", "Comparar com sistema próprio", "Outro"];
   const whatsappType = values.profile === "Empresa" || values.profile === "Múltiplas unidades" ? "business" : "residential";
 
   const updateValue = (event) => {
@@ -675,8 +635,8 @@ function AnalysisForm() {
       window.setTimeout(() => {
         setSubmitting(false);
         setStage("sent");
-        setStatus("Recebemos sua solicitação nesta página. Como o endpoint ainda não está configurado, use WhatsApp ou e-mail para concluir o envio da fatura.");
-      }, 450);
+        setStatus("Solicitação preparada. Como o endpoint ainda não está configurado, conclua o envio da fatura pelo WhatsApp ou e-mail.");
+      }, 350);
       return;
     }
 
@@ -721,17 +681,15 @@ function AnalysisForm() {
         <div className="form-aside">
           <p className="eyebrow">Análise da conta</p>
           <h2>Envie sua conta para análise</h2>
-          <p>
-            Preencha as informações principais. A equipe da Renovera verificará a elegibilidade e entrará em contato para apresentar os próximos passos.
-          </p>
+          <p>Preencha as informações principais. A Renovera verificará a região, a distribuidora e o perfil de consumo antes de apresentar os próximos passos.</p>
           <div className="next-steps">
-            <h3>O que acontece depois do envio?</h3>
+            <h3>Depois do envio</h3>
             <ol>
-              <li>conferimos os dados básicos</li>
-              <li>analisamos a região e a distribuidora</li>
-              <li>verificamos o perfil de consumo</li>
-              <li>entramos em contato</li>
-              <li>apresentamos as condições disponíveis</li>
+              <li>conferência dos dados</li>
+              <li>análise da região</li>
+              <li>avaliação do consumo</li>
+              <li>contato da equipe</li>
+              <li>apresentação das condições</li>
             </ol>
           </div>
           <div className="contact-box">
@@ -741,11 +699,8 @@ function AnalysisForm() {
             <a href={`mailto:${siteConfig.email}`} onClick={() => track(analyticsEvents.footerContactClick)}>
               <Mail aria-hidden="true" /> {siteConfig.email}
             </a>
-            <span><ShieldCheck aria-hidden="true" /> {siteConfig.businessHours}</span>
+            <span><ShieldCheck aria-hidden="true" /> Análise individual por unidade</span>
           </div>
-          <p className="microcopy">
-            A conta poderá ser enviada durante o atendimento. Este formulário não armazena faturas porque ainda não há backend seguro configurado.
-          </p>
         </div>
 
         <div className="form-card">
@@ -811,7 +766,7 @@ function AnalysisForm() {
                   {fieldError("state")}
                 </label>
                 <label>
-                  Perfil do consumidor *
+                  Perfil *
                   <select name="profile" value={values.profile} onChange={updateValue} {...errorProps("profile")}>
                     <option value="">Selecione</option>
                     {profileOptions.map((option) => <option key={option}>{option}</option>)}
@@ -825,7 +780,7 @@ function AnalysisForm() {
                 </label>
                 <label>
                   Valor médio da conta *
-                  <input name="billValue" value={values.billValue} onChange={updateValue} inputMode="decimal" placeholder="R$ 0,00" {...errorProps("billValue")} />
+                  <input name="billValue" value={values.billValue} onChange={updateValue} inputMode="decimal" placeholder="Ex.: R$ 801 a R$ 2.000" {...errorProps("billValue")} />
                   {fieldError("billValue")}
                 </label>
                 <label>
@@ -845,20 +800,15 @@ function AnalysisForm() {
                   {fieldError("interest")}
                 </label>
               </div>
-
               <div className="upload-note">
                 <UploadCloud aria-hidden="true" />
-                <span>A fatura poderá ser enviada pelo atendimento. Não há upload ativo sem backend seguro.</span>
+                <span>A fatura poderá ser enviada pelo WhatsApp. Não há upload ativo sem backend seguro.</span>
               </div>
-
               <label className="consent">
                 <input name="consent" type="checkbox" checked={values.consent} onChange={updateValue} {...errorProps("consent")} />
-                <span>
-                  Concordo com o uso dos meus dados para contato e análise de elegibilidade, conforme a <a href={siteConfig.privacyUrl}>Política de Privacidade</a>.
-                </span>
+                <span>Concordo com o uso dos meus dados para contato e análise, conforme a <a href={siteConfig.privacyUrl}>Política de Privacidade</a>.</span>
               </label>
               {fieldError("consent")}
-
               <div className="form-actions">
                 <button className="btn btn-primary" type="submit">
                   Analisar minha conta <ArrowRight aria-hidden="true" size={18} />
@@ -881,7 +831,7 @@ function FAQ() {
         <div className="section-heading left">
           <p className="eyebrow">FAQ</p>
           <h2>Perguntas frequentes</h2>
-          <p>Respostas simples para entender o básico antes da análise da sua conta.</p>
+          <p>Respostas curtas antes da análise da conta.</p>
         </div>
         <div className="accordion">
           {faqItems.map((item, index) => {
@@ -920,7 +870,7 @@ function FinalCTA() {
         <div>
           <p className="eyebrow">Próximo passo</p>
           <h2>Descubra se sua conta pode participar</h2>
-          <p>Envie sua fatura e receba uma análise inicial da equipe Renovera.</p>
+          <p>Envie as informações da sua unidade e receba uma análise inicial da Renovera.</p>
         </div>
         <div className="cta-actions">
           <ButtonLink href="#analise" icon={FileSearch}>Analisar minha conta</ButtonLink>
@@ -941,9 +891,9 @@ function Footer() {
         <div>
           <img src="./renovera-logo.png" width="170" height="41" alt="Renovera" />
           <h2>Renô Compartilha</h2>
-          <p>Energia solar compartilhada para consumidores finais que desejam simplicidade, clareza e acompanhamento.</p>
+          <p>Energia solar compartilhada para consumidores finais que buscam simplicidade e acompanhamento.</p>
           <p className="footer-warning">
-            A elegibilidade, os valores e a estimativa de economia dependem da análise individual da unidade consumidora, das tarifas, da distribuidora e das condições disponíveis.
+            A elegibilidade, os valores e a estimativa de economia dependem da análise individual, tarifas, distribuidora e condições disponíveis.
           </p>
         </div>
         <div>
@@ -985,19 +935,43 @@ function FloatingWhatsapp() {
 }
 
 export default function App() {
+  const [formValues, setFormValues] = useState(initialForm);
+
+  const applyQualifier = (data, shouldScroll) => {
+    setFormValues((current) => ({
+      ...current,
+      profile: data.profile || current.profile,
+      billValue: data.billValue || current.billValue,
+      state: data.state || current.state,
+      distributor: data.distributor || current.distributor,
+      interest: current.interest || "Utilizar energia solar sem placas",
+      unitType: current.unitType || (data.profile === "Empresa" ? "Estabelecimento comercial" : "Imóvel próprio")
+    }));
+    if (shouldScroll) window.setTimeout(scrollToAnalysis, 80);
+  };
+
+  const applyAudience = (profile) => {
+    setFormValues((current) => ({
+      ...current,
+      profile,
+      interest: current.interest || (profile === "Empresa" ? "Reduzir custos" : "Utilizar energia solar sem placas"),
+      unitType: current.unitType || (profile === "Empresa" ? "Estabelecimento comercial" : "Imóvel próprio")
+    }));
+    window.setTimeout(scrollToAnalysis, 80);
+  };
+
   return (
     <>
       <Header />
       <main id="conteudo">
         <Hero />
         <TrustBar />
+        <Qualifier onComplete={applyQualifier} />
         <Benefits />
         <HowItWorks />
-        <Audience />
-        <NoPanelsBand />
+        <Audience onAudienceClick={applyAudience} />
         <BillSection />
-        <Eligibility />
-        <AnalysisForm />
+        <AnalysisForm values={formValues} setValues={setFormValues} />
         <FAQ />
         <FinalCTA />
       </main>

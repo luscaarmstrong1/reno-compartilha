@@ -2,6 +2,8 @@
 
 Landing page estática para GitHub Pages do serviço Renô Compartilha, voltada a consumidores finais interessados em energia solar compartilhada sem instalação de placas no imóvel.
 
+A versão atual possui um qualificador interativo em três passos que preenche o formulário de análise automaticamente.
+
 ## Stack
 
 - React

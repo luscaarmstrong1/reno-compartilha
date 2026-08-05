@@ -10,6 +10,13 @@ export const siteConfig = {
   termsUrl: "",
   formEndpoint: "",
   approvedSavingsRange: null,
+  billRanges: [
+    "Até R$ 300",
+    "R$ 301 a R$ 800",
+    "R$ 801 a R$ 2.000",
+    "R$ 2.001 a R$ 5.000",
+    "Acima de R$ 5.000"
+  ],
   businessHours: "Atendimento: Segunda a Sexta",
   services: [
     {
@@ -46,8 +53,8 @@ export const analyticsEvents = {
   heroWhatsappClick: "hero_whatsapp_click",
   businessAnalysisClick: "business_analysis_click",
   residentialAnalysisClick: "residential_analysis_click",
-  calculatorStart: "calculator_start",
-  calculatorComplete: "calculator_complete",
+  qualifierStart: "qualifier_start",
+  qualifierComplete: "qualifier_complete",
   formStart: "form_start",
   formSubmit: "form_submit",
   whatsappClick: "whatsapp_click",

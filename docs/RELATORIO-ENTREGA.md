@@ -1,123 +1,142 @@
-# Relatório de entrega - Renô Compartilha
+# Relatório de entrega - Refatoração Renô Compartilha
 
-## Identidade visual encontrada
+## Objetivo aplicado
 
-A página segue a família visual Renovera observada no site institucional e na landing Renô Gestão: verde institucional escuro, verde de apoio, detalhe dourado solar, cards limpos, botões em pílula, raio de borda de 8px, header claro e footer institucional.
+A landing page da Renô Compartilha foi refatorada para ficar mais curta, leve, amigável e orientada ao envio da conta de energia para análise. A página preserva a identidade visual da Renovera e reduz o conteúdo prévio ao essencial para o consumidor final.
 
-## Decisões de design
+## Auditoria realizada
 
-- Direção mais leve que Renô Gestão, com fundo branco/off-white e menos densidade corporativa.
-- Hero direto para cliente final, com CTA principal "Analisar minha conta".
-- Imagem própria em WebP mostrando usina remota, rede e imóveis, reforçando que não há instalação no imóvel.
-- Copy sem promessa de economia garantida, sem venda de energia, sem preço por kWh e sem depoimentos fictícios.
+- Projeto-fonte localizado em React + Vite.
+- Deploy existente validado em GitHub Pages.
+- Header, footer, formulário, WhatsApp, SEO, dados estruturados, imagens e mobile revisados.
+- Identidade comparada com Renô Gestão e site institucional Renovera.
+- As páginas antigas de consultoria, projetos, energia solar e eletroposto indicadas no briefing retornaram 404 no momento da auditoria.
 
-## Estrutura final
+## Seções removidas
+
+- Calculadora antiga de estimativa.
+- Seção extensa e isolada de elegibilidade.
+- Faixa intermediária com diagrama de fluxo.
+- Listas longas de exemplos em cards de público.
+- Um item da FAQ, reduzindo de sete para seis perguntas.
+
+## Seções agrupadas
+
+- A elegibilidade foi incorporada ao qualificador interativo e ao formulário.
+- A explicação sobre a usina remota foi concentrada no hero e no texto de apoio.
+- O conteúdo de cobrança foi mantido em duas colunas simples.
+
+## Nova estrutura
 
 1. Header
 2. Hero
 3. Faixa de confiança
-4. Benefícios
-5. Como funciona
-6. Para quem é
-7. Faixa "sem placas"
+4. Qualificador interativo
+5. Benefícios
+6. Como funciona
+7. Empresas e residências
 8. Como aparece na conta
-9. Análise de elegibilidade
-10. Formulário principal
-11. FAQ
-12. CTA final
-13. Footer
+9. Formulário de análise
+10. FAQ
+11. CTA final
+12. Footer
 
-## Stack
+## Qualificador interativo
 
-- React
-- Vite
-- CSS estático
-- Lucide React para ícones
-- Build estático para GitHub Pages
+O qualificador substitui a calculadora antiga e funciona em três passos:
 
-## Arquivos criados
+1. Perfil da conta: Empresa ou Residência.
+2. Valor médio mensal: faixas configuráveis em `siteConfig`.
+3. Região: Estado e distribuidora, se conhecida.
 
-- `index.html`
-- `vite.config.js`
-- `package.json`
-- `pnpm-lock.yaml`
-- `pnpm-workspace.yaml`
-- `.gitignore`
-- `.github/workflows/deploy.yml`
-- `src/App.jsx`
-- `src/main.jsx`
-- `src/styles.css`
-- `src/config/siteConfig.js`
-- `public/favicon.svg`
-- `public/robots.txt`
-- `public/sitemap.xml`
-- `public/.nojekyll`
-- `public/404.html`
-- `public/renovera-logo.png`
-- `public/reno-compartilha-hero.webp`
-- `public/reno-compartilha-hero-1280.webp`
-- `public/reno-compartilha-hero-960.webp`
-- `README.md`
+O resultado não aprova automaticamente. Ele informa que a conta pode seguir para análise individual e orienta o visitante ao formulário ou WhatsApp.
+
+## Integração com o formulário
+
+Ao concluir o qualificador, a página preenche automaticamente:
+
+- Perfil
+- Valor médio da conta
+- Estado
+- Distribuidora
+- Principal interesse inicial
+- Tipo de unidade inicial
+
+Os dados já digitados no formulário são preservados.
 
 ## Formulário
 
-O formulário valida campos obrigatórios, telefone, e-mail e consentimento. Antes do envio, mostra um resumo para conferência e permite correção. O endpoint fica centralizado em `src/config/siteConfig.js`.
-
-Como ainda não há endpoint real configurado, o envio apresenta fallback claro para WhatsApp/e-mail sem apagar os dados e sem registrar dados pessoais no console.
-
-## Envio de fatura
-
-Não foi criado upload falso. A página informa que a fatura poderá ser enviada durante o atendimento, até existir backend seguro e documentado.
+O formulário mantém validação em português, máscara de telefone, resumo antes da confirmação, consentimento, prevenção de envio duplicado e fallback de WhatsApp/e-mail quando não houver endpoint configurado.
 
 ## WhatsApp
 
-O número fica centralizado em `src/config/siteConfig.js`. Como o WhatsApp definitivo não foi fornecido, os CTAs de WhatsApp não usam número fictício.
+O número e os textos continuam centralizados em `src/config/siteConfig.js`. Como não há WhatsApp definitivo informado, a interface mantém o CTA configurável e evita número fictício.
 
-## Calculadora
+## SEO
 
-A estimativa inicial funciona como qualificação. Ela não exibe percentuais ou valores de economia sem faixa comercial validada.
+Foram preservados:
 
-## GitHub Pages
+- Title
+- Meta description atualizada
+- Canonical
+- Open Graph
+- Twitter Card
+- Favicon
+- Theme color
+- Organization
+- Service
+- FAQPage com seis perguntas
+- Sitemap
+- Robots.txt
 
-O projeto usa `base: "./"` e workflow de GitHub Pages por Actions. A URL esperada é:
+## Arquivos alterados
+
+- `src/App.jsx`
+- `src/styles.css`
+- `src/config/siteConfig.js`
+- `index.html`
+- `docs/RELATORIO-ENTREGA.md`
+- `work/qa.mjs`
+
+## Testes
+
+- Build Vite: aprovado.
+- QA Playwright: aprovado.
+- Menu mobile: abre e fecha por Escape.
+- Links internos: aprovados.
+- FAQ acessível: aprovada.
+- Qualificador preenchendo formulário: aprovado.
+- Validação do formulário: aprovada.
+- Revisão e confirmação do formulário: aprovadas.
+- Overflow horizontal: aprovado em 320, 360, 375, 390, 414, 768, 1024, 1280, 1440 e 1920 px.
+
+## Lighthouse local
+
+- Performance: 94
+- Accessibility: 97
+- Best Practices: 100
+- SEO: 100
+- LCP: 2.7 s
+- TBT: 10 ms
+- CLS: 0
+- Speed Index: 2.1 s
+
+## Publicação
+
+O deploy é realizado por GitHub Actions em `.github/workflows/deploy.yml`.
+
+URL publicada:
 
 ```text
 https://luscaarmstrong1.github.io/reno-compartilha/
 ```
 
-Se o repositório for transferido para outro usuário ou organização, atualizar `siteUrl`, canonical, sitemap e metadados em `src/config/siteConfig.js`, `index.html` e `public/sitemap.xml`.
-
-## Testes realizados
-
-- Build Vite: aprovado.
-- QA Playwright: menu mobile, Escape, links internos, FAQ, validação do formulário, revisão/confirmação e overflow horizontal em 320, 360, 375, 390, 414, 768, 1024, 1280, 1440 e 1920 px.
-- Lighthouse local: Performance 94, Accessibility 96, Best Practices 100, SEO 100.
-- Métricas Lighthouse: LCP 2.7s, TBT 0ms, CLS 0, Speed Index 2.1s.
-
-## Limitações
-
-- WhatsApp definitivo não informado.
-- Endpoint do formulário não informado.
-- Termos de Uso não encontrados no site institucional.
-- Estados, distribuidoras, perfis aceitos e condições comerciais ainda precisam de validação da Renovera.
-- Não há depoimentos reais autorizados específicos para Renô Compartilha.
-
-## Dados pendentes da Renovera
+## Pendências da Renovera
 
 - WhatsApp definitivo
-- E-mail definitivo, se diferente de `contato@renovera.com.br`
-- Endpoint do formulário
-- Política de Privacidade definitiva
+- Endpoint real do formulário
 - Termos de Uso
-- Estados atendidos
-- Distribuidoras atendidas
-- Perfis aceitos
-- Valor mínimo de conta
-- Prazo de adesão
-- Condições comerciais
-- Faixa de economia autorizada
-- Regras de fidelidade
-- Taxas
-- Documentos exigidos
-- Depoimentos reais
-- Imagens autorizadas adicionais
+- Estados e distribuidoras atendidas
+- Condições comerciais autorizadas
+- Regras de fidelidade, taxas e documentos exigidos
+- Depoimentos reais autorizados, caso desejem incluir prova social futura
