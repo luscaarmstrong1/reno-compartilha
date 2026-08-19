@@ -1,58 +1,47 @@
-# Renovera Charge Landing Page
+# Renovera | Landing Page Regulatória
 
-Landing page editável em React + Vite para a Renovera Charge, com calculadora de viabilidade para eletropostos, botão flutuante de WhatsApp e editor visual de textos no navegador.
+Projeto recuperado da conversa "Landing Page Design" e aprimorado sem recriar a landing do zero.
 
-## Rodar localmente
+## Como abrir
 
-```powershell
+O projeto é Vite + React + TypeScript.
+
+```bash
 npm install
-npm run dev
+npm run dev -- --port 5401
 ```
 
-Depois abra o endereço mostrado pelo Vite, normalmente:
+Nesta sessão, o runtime local não expôs `npm` no PATH; por isso a validação foi feita com o Node empacotado do Codex e `pnpm` para instalar as tipagens ausentes. O servidor ativo está em:
 
-```txt
-http://127.0.0.1:5173/
+```bash
+http://127.0.0.1:5401/
 ```
 
-## Editor visual
+## Como editar pela própria página
 
-Abra:
+Acesse:
 
-```txt
-http://127.0.0.1:5173/editor
+```bash
+http://127.0.0.1:5401/editor
 ```
 
-Clique em **Editar textos**, altere títulos/parágrafos/botões direto na página e use **Salvar no navegador**. As alterações ficam no `localStorage` do navegador. Também é possível exportar JSON e restaurar o conteúdo original.
+Clique em `Editar textos`, altere títulos, parágrafos e botões direto na página e depois clique em `Salvar no navegador`. Também há opção de exportar JSON e restaurar os textos originais.
 
-## Editar no VS Code
+## Como editar no VS Code
 
-Abra esta pasta no VS Code:
-
-```powershell
-code .
-```
+Abra o arquivo `renovera-regulatoria.code-workspace` no Visual Studio Code.
 
 Arquivos principais:
 
-- `src/App.tsx`: textos, seções, calculadora, links e dados da página.
-- `src/LiveEditor.tsx`: editor visual de textos em `/editor`.
-- `src/index.css`: visual, responsividade, foco acessível e identidade.
-- `public/logo-renovera.png` e `public/logo.png`: marca usada no topo, rodapé, favicon e manifest.
-- `public/_headers`: headers de segurança para hospedagens estáticas compatíveis.
-- `public/robots.txt`, `public/sitemap.xml`, `public/site.webmanifest`: SEO técnico e metadados de instalação.
+- `src/App.tsx`: estrutura, textos, triagem, CTAs e WhatsApp.
+- `src/LiveEditor.tsx`: editor visual em tempo real.
+- `src/index.css`: identidade visual, responsividade, foco acessível e editor local.
+- `public/logo-renovera.png` e `public/logo.png`: logo usada na página.
+- `index.html`: SEO, Open Graph e dados estruturados.
 
-## Publicar
+## Scripts
 
-Gere a versao de producao:
-
-```powershell
-npm run build
-```
-
-Os arquivos finais ficam em `dist`.
-
-## Observações
-
-- Troque o número do WhatsApp em `src/App.tsx` antes de publicar.
-- Se a hospedagem não reconhecer `public/_headers`, configure os mesmos headers no painel ou servidor da infraestrutura.
+- `npm run dev`: abre servidor de desenvolvimento.
+- `npm run typecheck`: valida TypeScript.
+- `npm run build`: gera a versão final em `dist`.
+- `npm run preview`: pré-visualiza a versão de produção.

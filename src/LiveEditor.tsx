@@ -3,7 +3,19 @@ import { useEffect, useMemo, useState } from "react";
 type Edits = Record<string, string>;
 
 const EDITABLE_SELECTOR =
-  "main h1, main h2, main h3, main p, main a, main button, footer h4, footer p, footer a";
+  "main h1, main h2, main h3, main p, main a, main button, footer h4, footer p, footer a, footer address";
+const MAX_EDIT_LENGTH = 500;
+
+function safeReadEdits(storageKey: string): Edits {
+  try {
+    const stored = localStorage.getItem(storageKey);
+    if (!stored) return {};
+    const parsed = JSON.parse(stored);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
 
 function textKey(element: Element, index: number) {
   const original = element.getAttribute("data-editor-original") || element.textContent?.trim() || "";
@@ -14,32 +26,19 @@ function getEditableElements() {
   return Array.from(document.querySelectorAll(EDITABLE_SELECTOR)).filter((element) => {
     if (element.closest(".live-editor-panel")) return false;
     const text = element.textContent?.trim() || "";
-    return text.length > 2 && text.length < 500;
+    return text.length > 2 && text.length <= MAX_EDIT_LENGTH;
   }) as HTMLElement[];
 }
 
-function readStoredEdits(storageKey: string): Edits {
-  const stored = localStorage.getItem(storageKey);
-  if (!stored) return {};
-
-  try {
-    const parsed = JSON.parse(stored);
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
-    return parsed as Edits;
-  } catch {
-    localStorage.removeItem(storageKey);
-    return {};
-  }
-}
-
 export default function LiveEditor({ namespace }: { namespace: string }) {
-  const isEditorRoute = typeof window !== "undefined" && window.location.pathname.endsWith("/editor");
+  const isEditorRoute =
+    typeof window !== "undefined" && window.location.pathname.replace(/\/$/, "").endsWith("/editor");
   const storageKey = useMemo(() => `renovera-live-editor:${namespace}`, [namespace]);
   const [enabled, setEnabled] = useState(false);
   const [status, setStatus] = useState("Editor pronto.");
 
   useEffect(() => {
-    const edits = readStoredEdits(storageKey);
+    const edits = safeReadEdits(storageKey);
 
     getEditableElements().forEach((element, index) => {
       if (!element.getAttribute("data-editor-original")) {
@@ -47,7 +46,7 @@ export default function LiveEditor({ namespace }: { namespace: string }) {
       }
       const key = textKey(element, index);
       element.setAttribute("data-editor-key", key);
-      if (edits[key]) element.textContent = edits[key];
+      if (edits[key]) element.textContent = edits[key].slice(0, MAX_EDIT_LENGTH);
     });
   }, [storageKey]);
 
@@ -57,13 +56,7 @@ export default function LiveEditor({ namespace }: { namespace: string }) {
     getEditableElements().forEach((element) => {
       element.contentEditable = enabled ? "true" : "false";
       element.classList.toggle("live-editable", enabled);
-      if (enabled) {
-        element.setAttribute("spellcheck", "true");
-        element.setAttribute("aria-label", "Texto editável");
-      } else {
-        element.removeAttribute("spellcheck");
-        element.removeAttribute("aria-label");
-      }
+      if (enabled) element.setAttribute("spellcheck", "true");
     });
   }, [enabled, isEditorRoute]);
 
@@ -78,15 +71,11 @@ export default function LiveEditor({ namespace }: { namespace: string }) {
     getEditableElements().forEach((element) => {
       const key = element.getAttribute("data-editor-key");
       const original = element.getAttribute("data-editor-original") || "";
-      const current = element.textContent?.trim() || "";
+      const current = element.textContent?.trim().slice(0, MAX_EDIT_LENGTH) || "";
       if (key && current && current !== original) edits[key] = current;
     });
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(edits, null, 2));
-      setStatus("Alterações salvas neste navegador.");
-    } catch {
-      setStatus("Não foi possível salvar neste navegador.");
-    }
+    localStorage.setItem(storageKey, JSON.stringify(edits, null, 2));
+    setStatus("Alterações salvas neste navegador.");
   }
 
   function reset() {
@@ -102,7 +91,6 @@ export default function LiveEditor({ namespace }: { namespace: string }) {
     const link = document.createElement("a");
     link.href = url;
     link.download = `${namespace}-edicoes.json`;
-    link.rel = "noopener";
     link.click();
     URL.revokeObjectURL(url);
     setStatus("Arquivo JSON exportado.");
@@ -118,8 +106,8 @@ export default function LiveEditor({ namespace }: { namespace: string }) {
       <button type="button" onClick={save}>Salvar no navegador</button>
       <button type="button" onClick={exportJson}>Exportar JSON</button>
       <button type="button" onClick={reset}>Restaurar original</button>
-      <a href={import.meta.env.BASE_URL} target="_self">Ver página normal</a>
-      <small>{status}</small>
+      <a href="/" target="_self">Ver página normal</a>
+      <small aria-live="polite">{status}</small>
     </aside>
   );
 }

@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "name": "Renovera Landing Regulatória",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "typescript.tsdk": "node_modules/typescript/lib"
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode"
+    ]
+  }
+}
