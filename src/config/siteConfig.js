@@ -4,7 +4,7 @@ export const siteConfig = {
   tagline: "Energia solar compartilhada para sua empresa ou residência",
   siteUrl: "https://luscaarmstrong1.github.io/reno-compartilha/",
   institutionalUrl: "https://renovera.com.br/",
-  whatsapp: "",
+  whatsapp: "5519996514827",
   email: "contato@renovera.com.br",
   privacyUrl: "https://renovera.com.br/lgpd.html",
   termsUrl: "",

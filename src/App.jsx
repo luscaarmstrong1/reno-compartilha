@@ -137,21 +137,32 @@ const requiredFields = {
   interest: "Selecione o principal interesse."
 };
 
-function track(eventName) {
-  if (typeof window !== "undefined" && window.dataLayer) {
-    window.dataLayer.push({ event: eventName });
-  }
+const attributionKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "fbclid"];
+
+function getAttribution() {
+  if (typeof window === "undefined") return {};
+  const params = new URLSearchParams(window.location.search);
+  return Object.fromEntries(attributionKeys.flatMap((key) => params.get(key) ? [[key, params.get(key)]] : []));
+}
+
+function track(eventName, context = {}) {
+  if (typeof window === "undefined") return;
+  const payload = { event: eventName, product: "compartilha", ...context, ...getAttribution() };
+  window.dispatchEvent(new CustomEvent("renovera:event", { detail: payload }));
+  if (Array.isArray(window.dataLayer)) window.dataLayer.push(payload);
 }
 
 function scrollToAnalysis() {
   document.getElementById("analise")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function getWhatsappHref(messageType = "residential") {
-  const message = siteConfig.whatsappMessages[messageType] ?? siteConfig.whatsappMessages.residential;
+function getWhatsappHref(messageType = "residential", customMessage = "") {
+  const message = customMessage || siteConfig.whatsappMessages[messageType] || siteConfig.whatsappMessages.residential;
   if (!siteConfig.whatsapp) return "#analise";
   const number = siteConfig.whatsapp.replace(/\D/g, "");
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  const campaign = Object.entries(getAttribution()).map(([key, value]) => `${key}: ${value}`).join(" | ");
+  const suffix = campaign ? `\n\nOrigem da visita: ${campaign}` : "";
+  return `https://wa.me/${number}?text=${encodeURIComponent(`${message}${suffix}`)}`;
 }
 
 function ButtonLink({ children, href = "#analise", variant = "primary", icon: Icon = ArrowRight, eventName, className = "", onClick }) {
@@ -631,12 +642,20 @@ function AnalysisForm({ values, setValues }) {
     setStatus("");
     track(analyticsEvents.formSubmit);
 
+    const leadMessage = [
+      "Olá, quero solicitar uma análise para participar da Renô Compartilha.",
+      "",
+      ...summaryRows.map(([label, value]) => `${label}: ${value}`),
+      "",
+      "Autorizo o uso destes dados para contato e análise da solicitação."
+    ].join("\n");
+
     if (!siteConfig.formEndpoint) {
-      window.setTimeout(() => {
-        setSubmitting(false);
-        setStage("sent");
-        setStatus("Solicitação preparada. Como o endpoint ainda não está configurado, conclua o envio da fatura pelo WhatsApp ou e-mail.");
-      }, 350);
+      track(analyticsEvents.whatsappClick, { placement: "form_fallback", profile: values.profile });
+      window.open(getWhatsappHref(whatsappType, leadMessage), "_blank", "noopener,noreferrer");
+      setSubmitting(false);
+      setStage("sent");
+      setStatus("Seus dados foram organizados e o WhatsApp foi aberto para concluir o envio à equipe Renovera.");
       return;
     }
 
@@ -694,7 +713,7 @@ function AnalysisForm({ values, setValues }) {
           </div>
           <div className="contact-box">
             <a href={getWhatsappHref(whatsappType)} onClick={() => track(analyticsEvents.whatsappClick)}>
-              <MessageCircle aria-hidden="true" /> {siteConfig.whatsapp ? "WhatsApp Renovera" : "WhatsApp a configurar"}
+              <MessageCircle aria-hidden="true" /> WhatsApp Renovera
             </a>
             <a href={`mailto:${siteConfig.email}`} onClick={() => track(analyticsEvents.footerContactClick)}>
               <Mail aria-hidden="true" /> {siteConfig.email}
@@ -906,11 +925,11 @@ function Footer() {
         </div>
         <div>
           <h3>Contato</h3>
-          <a href={getWhatsappHref("residential")} onClick={() => track(analyticsEvents.whatsappClick)}>WhatsApp configurável</a>
+          <a href={getWhatsappHref("residential")} onClick={() => track(analyticsEvents.whatsappClick, { placement: "footer" })}>WhatsApp Renovera</a>
           <a href={`mailto:${siteConfig.email}`} onClick={() => track(analyticsEvents.footerContactClick)}>{siteConfig.email}</a>
           <span>{siteConfig.businessHours}</span>
           <a href={siteConfig.privacyUrl}>Política de Privacidade</a>
-          {siteConfig.termsUrl ? <a href={siteConfig.termsUrl}>Termos de Uso</a> : <span>Termos de Uso a configurar</span>}
+          {siteConfig.termsUrl ? <a href={siteConfig.termsUrl}>Termos de Uso</a> : null}
         </div>
       </div>
       <div className="container footer-bottom">
