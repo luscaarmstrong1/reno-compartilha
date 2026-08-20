@@ -327,7 +327,7 @@ h3 {
 
 h1 {
   max-width: 700px;
-  font-size: clamp(2.75rem, 5.4vw, 5.1rem);
+  font-size: clamp(2.75rem, 5vw, 4.3rem);
   font-weight: 800;
 }
 
