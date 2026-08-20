@@ -1004,6 +1004,19 @@ export default function App() {
       <Header />
       <main id="conteudo">
         <Hero />
+        <section className="visual-proof compartilha-proof" aria-labelledby="compartilha-proof-title">
+          <div className="container visual-proof-grid">
+            <div className="visual-proof-copy">
+              <p className="eyebrow">Geração compartilhada</p>
+              <h2 id="compartilha-proof-title">Uma usina remota, uma experiência simples para quem participa.</h2>
+              <p>A imagem principal continua mostrando a conexão entre geração, rede e consumo, sem transformar a oferta em promessa além da análise da conta.</p>
+              <div className="visual-proof-points"><span>Sem obra no imóvel</span><span>Análise individual</span><span>Acompanhamento</span></div>
+            </div>
+            <figure className="visual-proof-media visual-proof-single">
+              <img src="./reno-compartilha-hero-1280.webp" alt="Usina solar remota conectada à rede elétrica" width="1680" height="960" loading="lazy" />
+            </figure>
+          </div>
+        </section>
         <TrustBar />
         <Qualifier onComplete={applyQualifier} />
         <Benefits />
