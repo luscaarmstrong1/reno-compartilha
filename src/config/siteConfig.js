@@ -21,19 +21,19 @@ export const siteConfig = {
   services: [
     {
       label: "Consultoria Regulatória",
-      href: "https://luscaarmstrong1.github.io/renovera-consultoria-regulatoria/"
+      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/consultoria/"
     },
     {
       label: "Design e Projetos Elétricos",
-      href: "https://luscaarmstrong1.github.io/renovera-design-projetos-eletricos/"
+      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/design/"
     },
     {
       label: "Energia Solar",
-      href: "https://luscaarmstrong1.github.io/renovera-energia-solar/"
+      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/solar/"
     },
     {
       label: "Eletroposto",
-      href: "https://luscaarmstrong1.github.io/renovera-eletroposto/"
+      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/eletroposto/"
     },
     {
       label: "Renô Gestão",
