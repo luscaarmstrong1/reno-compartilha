@@ -1,4 +1,25 @@
+function normalizeWhatsAppButton(attempt = 0) {
+  const float = document.querySelector(".whatsapp-float");
+  if (!float && attempt < 20) {
+    setTimeout(() => normalizeWhatsAppButton(attempt + 1), 50);
+    return;
+  }
+  const existing = float || [...document.querySelectorAll("a[href*='wa.me'], a[href*='whatsapp']")].at(-1);
+  const link = existing || document.createElement("a");
+  if (!existing) {
+    link.className = "whatsapp-float";
+    link.href = "https://wa.me/5519996514827";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", "Falar com a Renovera no WhatsApp");
+    link.innerHTML = '<span aria-hidden="true">WhatsApp</span>';
+    document.body.append(link);
+  }
+  link.classList.add("rv-whatsapp-premium");
+}
+
 function init() {
+  normalizeWhatsAppButton();
   const button = document.createElement("button");
   button.className = "rv-scroll-top";
   button.type = "button";
