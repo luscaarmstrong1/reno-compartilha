@@ -220,7 +220,7 @@ function Header() {
       <nav className="container nav" aria-label="Navegação principal">
         <a className="brand" href="#inicio" aria-label="Renovera, Renô Compartilha">
           <img src="./renovera-logo.png" width="178" height="43" alt="Renovera" />
-          <span>Renô Compartilha</span>
+          <span>RENOVERA | RENÔ COMPARTILHA</span>
         </a>
         <div className="nav-links" aria-label="Menu principal">
           {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
@@ -945,7 +945,7 @@ function FloatingWhatsapp() {
     <a
       className="floating-whatsapp"
       href={getWhatsappHref("residential")}
-      aria-label="Falar pelo WhatsApp"
+      aria-label="Falar com a Renovera no WhatsApp"
       onClick={() => track(analyticsEvents.whatsappClick)}
     >
       <MessageCircle aria-hidden="true" />
