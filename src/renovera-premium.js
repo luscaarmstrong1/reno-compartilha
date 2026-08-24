@@ -12,7 +12,7 @@ function normalizeWhatsAppButton(attempt = 0) {
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.setAttribute("aria-label", "Falar com a Renovera no WhatsApp");
-    link.innerHTML = '<span aria-hidden="true">WhatsApp</span>';
+    link.innerHTML = '<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.9 0-3.1-1.2-6.1-3.4-8.3Zm-8.4 18.2h-.1c-1.8 0-3.6-.5-5.2-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2C1.9 6.4 6.4 2 12 2c2.7 0 5.1 1 7 2.9a9.9 9.9 0 0 1 2.9 7c0 5.5-4.4 9.9-9.8 9.9Z"/></svg>';
     document.body.append(link);
   }
   link.classList.add("rv-whatsapp-premium");

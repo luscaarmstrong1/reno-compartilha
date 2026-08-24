@@ -165,6 +165,10 @@ function getWhatsappHref(messageType = "residential", customMessage = "") {
   return `https://wa.me/${number}?text=${encodeURIComponent(`${message}${suffix}`)}`;
 }
 
+function WhatsAppIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a11.8 11.8 0 0 0 5.6 1.4h.1c6.5 0 11.8-5.3 11.8-11.9 0-3.1-1.2-6.1-3.4-8.3Zm-8.4 18.2h-.1c-1.8 0-3.6-.5-5.2-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2C1.9 6.4 6.4 2 12 2c2.7 0 5.1 1 7 2.9a9.9 9.9 0 0 1 2.9 7c0 5.5-4.4 9.9-9.8 9.9Zm5.4-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.6-.8-2.7-1.4-3.8-3.2-.3-.5.3-.5.9-1.7.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.8 5.1 2.2.9 3 .9 4.1.8.7-.1 1.8-.7 2.1-1.3.3-.6.3-1.2.2-1.3-.1-.2-.3-.3-.6-.4Z" /></svg>;
+}
+
 function ButtonLink({ children, href = "#analise", variant = "primary", icon: Icon = ArrowRight, eventName, className = "", onClick }) {
   return (
     <a
@@ -218,9 +222,9 @@ function Header() {
     <header className="site-header">
       <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
       <nav className="container nav" aria-label="Navegação principal">
-        <a className="brand" href="#inicio" aria-label="Renovera, Renô Compartilha">
+        <a className="brand" href={siteConfig.institutionalUrl} aria-label="Ir para a Renovera">
           <img src="./renovera-logo.png" width="178" height="43" alt="Renovera" />
-          <span>RENOVERA | RENÔ COMPARTILHA</span>
+          <span>RENÔ COMPARTILHA</span>
         </a>
         <div className="nav-links" aria-label="Menu principal">
           {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
@@ -948,7 +952,7 @@ function FloatingWhatsapp() {
       aria-label="Falar com a Renovera no WhatsApp"
       onClick={() => track(analyticsEvents.whatsappClick)}
     >
-      <MessageCircle aria-hidden="true" />
+      <WhatsAppIcon />
     </a>
   );
 }

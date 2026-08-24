@@ -2,7 +2,7 @@ export const siteConfig = {
   brand: "Renô Compartilha",
   company: "Renovera",
   tagline: "Energia solar compartilhada para sua empresa ou residência",
-  siteUrl: "https://luscaarmstrong1.github.io/reno-compartilha/",
+  siteUrl: "https://renovera.com.br/compartilha/",
   institutionalUrl: "https://renovera.com.br/",
   whatsapp: "5519996514827",
   email: "contato@renovera.com.br",
@@ -21,23 +21,23 @@ export const siteConfig = {
   services: [
     {
       label: "Consultoria Regulatória",
-      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/consultoria/"
+      href: "https://renovera.com.br/consultoria/"
     },
     {
       label: "Design e Projetos Elétricos",
-      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/design/"
+      href: "https://renovera.com.br/design/"
     },
     {
       label: "Energia Solar",
-      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/solar/"
+      href: "https://renovera.com.br/solar/"
     },
     {
       label: "Eletroposto",
-      href: "https://luscaarmstrong1.github.io/renovera-landings-publicas/eletroposto/"
+      href: "https://renovera.com.br/eletroposto/"
     },
     {
       label: "Renô Gestão",
-      href: "https://luscaarmstrong1.github.io/reno-gestao/"
+      href: "https://renovera.com.br/gestao/"
     }
   ],
   whatsappMessages: {
