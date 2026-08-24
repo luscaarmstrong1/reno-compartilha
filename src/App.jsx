@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createElement, useEffect, useMemo, useRef, useState } from "react";
+import { createRenoveraLandingUi } from "@renovera/landing-ui";
 import ArrowRight from "lucide-react/dist/esm/icons/arrow-right.js";
 import BadgeCheck from "lucide-react/dist/esm/icons/badge-check.js";
 import Building2 from "lucide-react/dist/esm/icons/building-2.js";
@@ -17,6 +18,7 @@ import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
 import UploadCloud from "lucide-react/dist/esm/icons/upload-cloud.js";
 import X from "lucide-react/dist/esm/icons/x.js";
 import { analyticsEvents, siteConfig } from "./config/siteConfig";
+const { FloatingWhatsApp, PageProgress, ProductHeader, ScrollToTop, SiteFooter } = createRenoveraLandingUi({ createElement, useEffect, useState });
 
 const navItems = [
   { label: "Início", href: "#inicio" },
@@ -219,10 +221,10 @@ function Header() {
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="site-header">
+    <header className="renovera-product-header site-header">
       <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
       <nav className="container nav" aria-label="Navegação principal">
-        <a className="brand" href={siteConfig.institutionalUrl} aria-label="Ir para a Renovera">
+        <a className="renovera-product-brand" href={siteConfig.institutionalUrl} aria-label="Ir para a Renovera">
           <img src="./renovera-logo.png" width="178" height="43" alt="Renovera" />
           <span>RENÔ COMPARTILHA</span>
         </a>
@@ -303,6 +305,20 @@ function Hero() {
             decoding="async"
             fetchPriority="high"
           />
+          <div className="sharing-flow" aria-label="Exemplo de operação de energia compartilhada">
+            <strong>USINA SOLAR</strong>
+            <span>Distribuidora</span>
+            <div className="sharing-flow__customers">
+              <span>Residência<br /><small>Créditos</small></span>
+              <span>Empresa<br /><small>Créditos</small></span>
+              <span>Comércio<br /><small>Créditos</small></span>
+            </div>
+            <div className="sharing-flow__facts">
+              <span>Créditos alocados</span>
+              <span>Economia acompanhada</span>
+              <span>Sem instalação no imóvel</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -907,54 +923,7 @@ function FinalCTA() {
 }
 
 function Footer() {
-  const year = new Date().getFullYear();
-  return (
-    <footer className="footer">
-      <div className="container footer-grid">
-        <div>
-          <img src="./renovera-logo.png" width="170" height="41" alt="Renovera" />
-          <h2>Renô Compartilha</h2>
-          <p>Energia solar compartilhada para consumidores finais que buscam simplicidade e acompanhamento.</p>
-          <p className="footer-warning">
-            A elegibilidade, os valores e a estimativa de economia dependem da análise individual, tarifas, distribuidora e condições disponíveis.
-          </p>
-        </div>
-        <div>
-          <h3>Menu</h3>
-          {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-        </div>
-        <div>
-          <h3>Soluções</h3>
-          {siteConfig.services.map((service) => <a key={service.label} href={service.href}>{service.label}</a>)}
-        </div>
-        <div>
-          <h3>Contato</h3>
-          <a href={getWhatsappHref("residential")} onClick={() => track(analyticsEvents.whatsappClick, { placement: "footer" })}>WhatsApp Renovera</a>
-          <a href={`mailto:${siteConfig.email}`} onClick={() => track(analyticsEvents.footerContactClick)}>{siteConfig.email}</a>
-          <span>{siteConfig.businessHours}</span>
-          <a href={siteConfig.privacyUrl}>Política de Privacidade</a>
-          {siteConfig.termsUrl ? <a href={siteConfig.termsUrl}>Termos de Uso</a> : null}
-        </div>
-      </div>
-      <div className="container footer-bottom">
-        <span>© {year} Renovera. Todos os direitos reservados.</span>
-        <span>Renô Compartilha</span>
-      </div>
-    </footer>
-  );
-}
-
-function FloatingWhatsapp() {
-  return (
-    <a
-      className="floating-whatsapp"
-      href={getWhatsappHref("residential")}
-      aria-label="Falar com a Renovera no WhatsApp"
-      onClick={() => track(analyticsEvents.whatsappClick)}
-    >
-      <WhatsAppIcon />
-    </a>
-  );
+  return <SiteFooter logoSrc="./renovera-logo.png" whatsappHref={getWhatsappHref("residential")} privacyHref={siteConfig.privacyUrl} termsHref={siteConfig.termsUrl} onWhatsappClick={() => track(analyticsEvents.whatsappClick, { placement: "footer" })} />;
 }
 
 export default function App() {
@@ -1032,7 +1001,9 @@ export default function App() {
         <FinalCTA />
       </main>
       <Footer />
-      <FloatingWhatsapp />
+      <FloatingWhatsApp href={getWhatsappHref("residential")} onClick={() => track(analyticsEvents.whatsappClick, { placement: "floating" })} />
+      <PageProgress />
+      <ScrollToTop />
     </>
   );
 }

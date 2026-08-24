@@ -169,18 +169,6 @@ svg {
   transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
 }
 
-.btn:hover,
-.nav-cta:hover,
-.floating-whatsapp:hover {
-  transform: translateY(-2px);
-}
-
-.btn:active,
-.nav-cta:active,
-.floating-whatsapp:active {
-  transform: translateY(0);
-}
-
 .btn-primary {
   background: var(--green-950);
   color: var(--white);
@@ -403,8 +391,8 @@ h3 {
 .hero-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: auto;
   border-radius: var(--radius);
   box-shadow: 0 20px 54px rgba(0, 53, 29, 0.14);
 }
@@ -1038,22 +1026,6 @@ select[aria-invalid="true"] {
   font-size: 0.88rem;
 }
 
-.floating-whatsapp {
-  position: fixed;
-  z-index: 70;
-  right: clamp(14px, 2.5vw, 28px);
-  bottom: clamp(14px, 2.5vw, 28px);
-  width: 56px;
-  height: 56px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  background: var(--gold);
-  color: var(--gold-dark);
-  box-shadow: var(--gold-shadow);
-  transition: transform var(--transition);
-}
-
 @media (max-width: 1080px) {
   .nav-links,
   .nav-cta {
@@ -1179,11 +1151,6 @@ select[aria-invalid="true"] {
     grid-template-columns: 1fr;
     gap: 2px;
   }
-
-  .floating-whatsapp {
-    width: 52px;
-    height: 52px;
-  }
 }
 
 @media (max-width: 360px) {
@@ -1215,17 +1182,6 @@ select[aria-invalid="true"] {
   }
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity var(--motion-slow), transform var(--motion-slow);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal.is-visible {
@@ -1241,13 +1197,16 @@ select[aria-invalid="true"] {
 .visual-proof-points { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 .visual-proof-points span { padding: 8px 12px; border: 1px solid rgba(47, 115, 58, .22); border-radius: 999px; color: #32753b; font-size: .82rem; font-weight: 700; }
 .visual-proof-single { display: block; }
-.visual-proof-media img { width: 100%; height: 100%; min-height: 270px; object-fit: cover; border-radius: 8px; box-shadow: 0 18px 40px rgba(28, 75, 33, .13); }
-@media (max-width: 760px) { .visual-proof { padding: 60px 0; } .visual-proof-grid { grid-template-columns: 1fr; gap: 28px; } .visual-proof-media img { min-height: 210px; } }
+.visual-proof-media img { width: 100%; height: auto; min-height: 0; object-fit: initial; border-radius: 8px; box-shadow: 0 18px 40px rgba(28, 75, 33, .13); }
+@media (max-width: 760px) { .visual-proof { padding: 60px 0; } .visual-proof-grid { grid-template-columns: 1fr; gap: 28px; } }
 .brand span { font-size: .72rem; font-weight: 900; letter-spacing: .06em; white-space: nowrap; }
-.hero-media { min-height: 540px; align-self: stretch; }
-.hero-media img { height: 100%; min-height: 540px; aspect-ratio: 16 / 10; object-fit: cover; object-position: center; }
-.visual-proof-single img { min-height: 420px; aspect-ratio: 16 / 10; }
-.floating-whatsapp { width: 56px; height: 56px; padding: 0; border-radius: 50%; background: #1f9d59; box-shadow: 0 12px 28px rgba(31, 157, 89, .32); transition: transform .2s ease, background .2s ease; }
-.floating-whatsapp:hover { background: #168448; transform: translateY(-3px); }
-.floating-whatsapp:focus-visible { outline: 3px solid #f2bf4a; outline-offset: 4px; }
-@media (max-width: 760px) { .brand span { font-size: .6rem; } .hero-media, .hero-media img { min-height: 300px; } .floating-whatsapp { right: 16px; bottom: 16px; width: 52px; height: 52px; } }
+.hero-media { position: relative; align-self: center; }
+.visual-proof-single img { min-height: 0; }
+.sharing-flow { position: absolute; right: 18px; bottom: 18px; left: 18px; display: grid; justify-items: center; gap: 8px; padding: 14px; border: 1px solid rgba(255, 255, 255, .48); border-radius: 8px; background: rgba(4, 45, 25, .86); color: #fff; box-shadow: 0 12px 30px rgba(0, 31, 15, .22); }
+.sharing-flow > strong { font-size: .75rem; letter-spacing: 0; }
+.sharing-flow > span { font-size: .68rem; opacity: .86; }
+.sharing-flow__customers, .sharing-flow__facts { display: grid; width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; text-align: center; }
+.sharing-flow__customers span { padding-top: 8px; border-top: 1px solid rgba(255,255,255,.45); font-size: .68rem; }
+.sharing-flow small { color: #c4f2cb; font-size: .62rem; }
+.sharing-flow__facts span { padding: 6px; border-radius: 5px; background: rgba(255,255,255,.12); font-size: .61rem; }
+@media (max-width: 760px) { .brand span { font-size: .6rem; } .sharing-flow { position: static; margin-top: 12px; } }
