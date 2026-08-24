@@ -18,7 +18,7 @@ import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
 import UploadCloud from "lucide-react/dist/esm/icons/upload-cloud.js";
 import X from "lucide-react/dist/esm/icons/x.js";
 import { analyticsEvents, siteConfig } from "./config/siteConfig";
-const { FloatingWhatsApp, PageProgress, ProductHeader, ScrollToTop, SiteFooter } = createRenoveraLandingUi({ createElement, useEffect, useState });
+const { FloatingWhatsApp, HeroArtworkFrame, PageProgress, ProductHeader, ScrollToTop, SectionImage, SiteFooter } = createRenoveraLandingUi({ createElement, useEffect, useState });
 
 const navItems = [
   { label: "Início", href: "#inicio" },
@@ -294,17 +294,7 @@ function Hero() {
             <li><Check aria-hidden="true" /> acompanhamento da Renovera</li>
           </ul>
         </div>
-        <div className="hero-media" aria-label="Usina solar remota conectada a casas e empresas">
-          <img
-            src="./reno-compartilha-hero-1280.webp"
-            srcSet="./reno-compartilha-hero-960.webp 960w, ./reno-compartilha-hero-1280.webp 1280w, ./reno-compartilha-hero.webp 1680w"
-            sizes="(max-width: 1080px) 100vw, 54vw"
-            alt="Usina solar remota conectada à rede elétrica próxima a imóveis residenciais e comerciais"
-            width="1680"
-            height="960"
-            decoding="async"
-            fetchPriority="high"
-          />
+        <HeroArtworkFrame className="hero-media" label="Fluxo de energia compartilhada">
           <div className="sharing-flow" aria-label="Exemplo de operação de energia compartilhada">
             <strong>USINA SOLAR</strong>
             <span>Distribuidora</span>
@@ -319,7 +309,7 @@ function Hero() {
               <span>Sem instalação no imóvel</span>
             </div>
           </div>
-        </div>
+        </HeroArtworkFrame>
       </div>
     </section>
   );
@@ -985,9 +975,29 @@ export default function App() {
               <p>A imagem principal continua mostrando a conexão entre geração, rede e consumo, sem transformar a oferta em promessa além da análise da conta.</p>
               <div className="visual-proof-points"><span>Sem obra no imóvel</span><span>Análise individual</span><span>Acompanhamento</span></div>
             </div>
-            <figure className="visual-proof-media visual-proof-single">
-              <img src="./reno-compartilha-hero-1280.webp" alt="Usina solar remota conectada à rede elétrica" width="1680" height="960" loading="lazy" />
-            </figure>
+            <div className="visual-proof-media visual-proof-single">
+              <SectionImage
+                src="./images/official/compartilha/compartilha-solar-sunset.webp"
+                srcSet="./images/official/compartilha/compartilha-solar-sunset-960.webp 960w, ./images/official/compartilha/compartilha-solar-sunset.webp 1600w"
+                sizes="(max-width: 760px) calc(100vw - 32px), 50vw"
+                alt="Usina solar remota conectada à cidade ao pôr do sol"
+                width="1600"
+                height="900"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="renovera-image-gallery-section" aria-labelledby="compartilha-context-title">
+          <div className="container">
+            <div className="renovera-image-gallery-section__heading">
+              <p className="eyebrow">Energia no cotidiano</p>
+              <h2 id="compartilha-context-title">A geração remota se conecta à conta e à rotina de quem participa.</h2>
+            </div>
+            <div className="renovera-image-gallery">
+              <SectionImage src="./images/official/compartilha/compartilha-home-energy.webp" srcSet="./images/official/compartilha/compartilha-home-energy-960.webp 960w, ./images/official/compartilha/compartilha-home-energy.webp 1448w" sizes="(max-width: 760px) calc(100vw - 32px), 50vw" alt="Consumidora acompanhando a economia de energia em casa" width="1448" height="1086" />
+              <SectionImage src="./images/official/compartilha/compartilha-energy-network.webp" srcSet="./images/official/compartilha/compartilha-energy-network-960.webp 960w, ./images/official/compartilha/compartilha-energy-network.webp 1448w" sizes="(max-width: 760px) calc(100vw - 32px), 50vw" alt="Rede de energia conectando uma comunidade residencial" width="1448" height="1086" />
+            </div>
           </div>
         </section>
         <TrustBar />
