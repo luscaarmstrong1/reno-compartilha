@@ -388,13 +388,23 @@ h3 {
   color: var(--green-700);
 }
 
+.hero-media {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
 .hero-media img {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: auto;
-  border-radius: var(--radius);
+  border-radius: inherit;
   box-shadow: 0 20px 54px rgba(0, 53, 29, 0.14);
+  transition: transform 450ms ease;
+}
+
+.hero-media:hover img {
+  transform: scale(1.06);
 }
 
 .trust-bar {
