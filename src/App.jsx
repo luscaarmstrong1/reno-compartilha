@@ -282,7 +282,7 @@ function Hero() {
               Analisar minha conta
             </ButtonLink>
             <ButtonLink href={getWhatsappHref("residential")} variant="outline" eventName={analyticsEvents.heroWhatsappClick} icon={MessageCircle}>
-              Falar pelo WhatsApp
+              Analisar minha conta no WhatsApp
             </ButtonLink>
           </div>
           <p className="microcopy">
@@ -904,7 +904,7 @@ function FinalCTA() {
         <div className="cta-actions">
           <ButtonLink href="#analise" icon={FileSearch}>Analisar minha conta</ButtonLink>
           <ButtonLink href={getWhatsappHref("residential")} variant="outline-light" icon={MessageCircle} eventName={analyticsEvents.whatsappClick}>
-            Falar pelo WhatsApp
+            Analisar minha conta no WhatsApp
           </ButtonLink>
         </div>
       </div>
@@ -970,11 +970,11 @@ export default function App() {
         <CombinedInsightSection
           id="compartilha-insight-title"
           eyebrow="Energia no cotidiano"
-          title="Geracao remota, creditos e uma jornada simples para participar."
-          description="A Renovera conecta a usina, a analise da conta e o acompanhamento da unidade em uma experiencia clara. Voce entende a viabilidade antes de decidir e acompanha cada proximo passo."
-          points={["Sem obra no imovel", "Analise individual", "Acompanhamento"]}
+          title="Geração remota, créditos e uma jornada simples para participar."
+          description="A Renovera conecta a usina, a análise da conta e o acompanhamento da unidade em uma experiência clara. Você entende a viabilidade antes de decidir e acompanha cada próximo passo."
+          points={["Sem obra no imóvel", "Análise individual", "Acompanhamento"]}
           primaryAction={{ href: "#analise", label: "Analisar minha conta" }}
-          secondaryAction={{ href: getWhatsappHref("residential"), label: "Falar pelo WhatsApp", external: true, onClick: () => track(analyticsEvents.whatsappClick, { placement: "combined_insight" }) }}
+          secondaryAction={{ href: getWhatsappHref("residential"), label: "Analisar minha conta no WhatsApp", external: true, onClick: () => track(analyticsEvents.whatsappClick, { placement: "combined_insight" }) }}
           images={[
             { src: "./images/official/compartilha/compartilha-home-energy.webp", srcSet: "./images/official/compartilha/compartilha-home-energy-960.webp 960w, ./images/official/compartilha/compartilha-home-energy.webp 1448w", alt: "Consumidora acompanhando a economia de energia em casa", width: 1448, height: 1086 },
             { src: "./images/official/compartilha/compartilha-energy-network.webp", srcSet: "./images/official/compartilha/compartilha-energy-network-960.webp 960w, ./images/official/compartilha/compartilha-energy-network.webp 1448w", alt: "Rede de energia conectando uma comunidade residencial", width: 1448, height: 1086 }
