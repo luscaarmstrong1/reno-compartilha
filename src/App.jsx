@@ -18,7 +18,7 @@ import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
 import UploadCloud from "lucide-react/dist/esm/icons/upload-cloud.js";
 import X from "lucide-react/dist/esm/icons/x.js";
 import { analyticsEvents, siteConfig } from "./config/siteConfig";
-const { FloatingWhatsApp, HeroArtworkFrame, PageProgress, ProductHeader, ScrollToTop, SectionImage, SiteFooter } = createRenoveraLandingUi({ createElement, useEffect, useState });
+const { CombinedInsightSection, FloatingWhatsApp, HeroArtworkFrame, PageProgress, ProductHeader, ScrollToTop, SiteFooter } = createRenoveraLandingUi({ createElement, useEffect, useState });
 
 const navItems = [
   { label: "Início", href: "#inicio" },
@@ -967,39 +967,19 @@ export default function App() {
       <Header />
       <main id="conteudo">
         <Hero />
-        <section className="visual-proof compartilha-proof" aria-labelledby="compartilha-proof-title">
-          <div className="container visual-proof-grid">
-            <div className="visual-proof-copy">
-              <p className="eyebrow">Geração compartilhada</p>
-              <h2 id="compartilha-proof-title">Uma usina remota, uma experiência simples para quem participa.</h2>
-              <p>A imagem principal continua mostrando a conexão entre geração, rede e consumo, sem transformar a oferta em promessa além da análise da conta.</p>
-              <div className="visual-proof-points"><span>Sem obra no imóvel</span><span>Análise individual</span><span>Acompanhamento</span></div>
-            </div>
-            <div className="visual-proof-media visual-proof-single">
-              <SectionImage
-                src="./images/official/compartilha/compartilha-solar-sunset.webp"
-                srcSet="./images/official/compartilha/compartilha-solar-sunset-960.webp 960w, ./images/official/compartilha/compartilha-solar-sunset.webp 1600w"
-                sizes="(max-width: 760px) calc(100vw - 32px), 50vw"
-                alt="Usina solar remota conectada à cidade ao pôr do sol"
-                width="1600"
-                height="900"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="renovera-image-gallery-section" aria-labelledby="compartilha-context-title">
-          <div className="container">
-            <div className="renovera-image-gallery-section__heading">
-              <p className="eyebrow">Energia no cotidiano</p>
-              <h2 id="compartilha-context-title">A geração remota se conecta à conta e à rotina de quem participa.</h2>
-            </div>
-            <div className="renovera-image-gallery">
-              <SectionImage src="./images/official/compartilha/compartilha-home-energy.webp" srcSet="./images/official/compartilha/compartilha-home-energy-960.webp 960w, ./images/official/compartilha/compartilha-home-energy.webp 1448w" sizes="(max-width: 760px) calc(100vw - 32px), 50vw" alt="Consumidora acompanhando a economia de energia em casa" width="1448" height="1086" />
-              <SectionImage src="./images/official/compartilha/compartilha-energy-network.webp" srcSet="./images/official/compartilha/compartilha-energy-network-960.webp 960w, ./images/official/compartilha/compartilha-energy-network.webp 1448w" sizes="(max-width: 760px) calc(100vw - 32px), 50vw" alt="Rede de energia conectando uma comunidade residencial" width="1448" height="1086" />
-            </div>
-          </div>
-        </section>
+        <CombinedInsightSection
+          id="compartilha-insight-title"
+          eyebrow="Energia no cotidiano"
+          title="Geracao remota, creditos e uma jornada simples para participar."
+          description="A Renovera conecta a usina, a analise da conta e o acompanhamento da unidade em uma experiencia clara. Voce entende a viabilidade antes de decidir e acompanha cada proximo passo."
+          points={["Sem obra no imovel", "Analise individual", "Acompanhamento"]}
+          primaryAction={{ href: "#analise", label: "Analisar minha conta" }}
+          secondaryAction={{ href: getWhatsappHref("residential"), label: "Falar pelo WhatsApp", external: true, onClick: () => track(analyticsEvents.whatsappClick, { placement: "combined_insight" }) }}
+          images={[
+            { src: "./images/official/compartilha/compartilha-home-energy.webp", srcSet: "./images/official/compartilha/compartilha-home-energy-960.webp 960w, ./images/official/compartilha/compartilha-home-energy.webp 1448w", alt: "Consumidora acompanhando a economia de energia em casa", width: 1448, height: 1086 },
+            { src: "./images/official/compartilha/compartilha-energy-network.webp", srcSet: "./images/official/compartilha/compartilha-energy-network-960.webp 960w, ./images/official/compartilha/compartilha-energy-network.webp 1448w", alt: "Rede de energia conectando uma comunidade residencial", width: 1448, height: 1086 }
+          ]}
+        />
         <TrustBar />
         <Qualifier onComplete={applyQualifier} />
         <Benefits />
