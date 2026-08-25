@@ -18,7 +18,7 @@ import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
 import UploadCloud from "lucide-react/dist/esm/icons/upload-cloud.js";
 import X from "lucide-react/dist/esm/icons/x.js";
 import { analyticsEvents, siteConfig } from "./config/siteConfig";
-const { CombinedInsightSection, FloatingWhatsApp, HeroArtworkFrame, PageProgress, ProductHeader, ScrollToTop, SiteFooter } = createRenoveraLandingUi({ createElement, useEffect, useState });
+const { CombinedInsightSection, FinalParallaxCta, FloatingWhatsApp, HeroArtworkFrame, PageProgress, ScrollToTop, SiteFooter } = createRenoveraLandingUi({ createElement, useEffect, useState });
 
 const navItems = [
   { label: "Início", href: "#inicio" },
@@ -172,10 +172,13 @@ function WhatsAppIcon() {
 }
 
 function ButtonLink({ children, href = "#analise", variant = "primary", icon: Icon = ArrowRight, eventName, className = "", onClick }) {
+  const isExternal = /^https?:\/\//.test(href);
   return (
     <a
       className={`btn btn-${variant} ${className}`}
       href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       onClick={(event) => {
         if (eventName) track(eventName);
         if (onClick) onClick(event);
@@ -610,6 +613,7 @@ function AnalysisForm({ values, setValues }) {
   const [stage, setStage] = useState("editing");
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [formStep, setFormStep] = useState(1);
   const startedRef = useRef(false);
 
   const profileOptions = ["Empresa", "Residência", "Condomínio", "Propriedade rural", "Múltiplas unidades", "Outro"];
@@ -638,6 +642,14 @@ function AnalysisForm({ values, setValues }) {
       setStage("review");
       setStatus("");
     }
+  };
+
+  const handleCoreNext = () => {
+    const nextErrors = validateForm(values);
+    const coreFields = ["profile", "name", "phone", "city", "state", "distributor", "billValue"];
+    const coreErrors = Object.fromEntries(Object.entries(nextErrors).filter(([field]) => coreFields.includes(field)));
+    setErrors(coreErrors);
+    if (Object.keys(coreErrors).length === 0) setFormStep(2);
   };
 
   const confirmSubmit = async () => {
@@ -767,83 +779,64 @@ function AnalysisForm({ values, setValues }) {
               </div>
             </div>
           ) : (
-            <form onSubmit={handleReview} noValidate>
-              <div className="form-grid">
-                <label>
-                  Nome *
-                  <input name="name" value={values.name} onChange={updateValue} autoComplete="name" {...errorProps("name")} />
-                  {fieldError("name")}
-                </label>
-                <label>
-                  Telefone/WhatsApp *
-                  <input name="phone" value={values.phone} onChange={updateValue} autoComplete="tel" inputMode="tel" {...errorProps("phone")} />
-                  {fieldError("phone")}
-                </label>
-                <label>
-                  E-mail *
-                  <input name="email" type="email" value={values.email} onChange={updateValue} autoComplete="email" {...errorProps("email")} />
-                  {fieldError("email")}
-                </label>
-                <label>
-                  Cidade *
-                  <input name="city" value={values.city} onChange={updateValue} autoComplete="address-level2" {...errorProps("city")} />
-                  {fieldError("city")}
-                </label>
-                <label>
-                  Estado *
-                  <input name="state" value={values.state} onChange={updateValue} maxLength="2" autoComplete="address-level1" {...errorProps("state")} />
-                  {fieldError("state")}
-                </label>
-                <label>
-                  Perfil *
-                  <select name="profile" value={values.profile} onChange={updateValue} {...errorProps("profile")}>
-                    <option value="">Selecione</option>
-                    {profileOptions.map((option) => <option key={option}>{option}</option>)}
-                  </select>
-                  {fieldError("profile")}
-                </label>
-                <label>
-                  Distribuidora *
-                  <input name="distributor" value={values.distributor} onChange={updateValue} autoComplete="organization" {...errorProps("distributor")} />
-                  {fieldError("distributor")}
-                </label>
-                <label>
-                  Valor médio da conta *
-                  <input name="billValue" value={values.billValue} onChange={updateValue} inputMode="decimal" placeholder="Ex.: R$ 801 a R$ 2.000" {...errorProps("billValue")} />
-                  {fieldError("billValue")}
-                </label>
-                <label>
-                  Tipo de unidade *
-                  <select name="unitType" value={values.unitType} onChange={updateValue} {...errorProps("unitType")}>
-                    <option value="">Selecione</option>
-                    {unitOptions.map((option) => <option key={option}>{option}</option>)}
-                  </select>
-                  {fieldError("unitType")}
-                </label>
-                <label className="full-field">
-                  Principal interesse *
-                  <select name="interest" value={values.interest} onChange={updateValue} {...errorProps("interest")}>
-                    <option value="">Selecione</option>
-                    {interestOptions.map((option) => <option key={option}>{option}</option>)}
-                  </select>
-                  {fieldError("interest")}
-                </label>
-              </div>
-              <div className="upload-note">
-                <UploadCloud aria-hidden="true" />
-                <span>A fatura poderá ser enviada pelo WhatsApp. Não há upload ativo sem backend seguro.</span>
-              </div>
-              <label className="consent">
-                <input name="consent" type="checkbox" checked={values.consent} onChange={updateValue} {...errorProps("consent")} />
-                <span>Concordo com o uso dos meus dados para contato e análise, conforme a <a href={siteConfig.privacyUrl}>Política de Privacidade</a>.</span>
-              </label>
-              {fieldError("consent")}
-              <div className="form-actions">
-                <button className="btn btn-primary" type="submit">
-                  Analisar minha conta <ArrowRight aria-hidden="true" size={18} />
-                </button>
-              </div>
-              <p className="microcopy">Seus dados serão utilizados somente para atendimento e análise da solicitação.</p>
+            <form className="analysis-form" onSubmit={handleReview} noValidate>
+              <div className="form-step-status" aria-live="polite">Etapa {formStep} de 2</div>
+              {formStep === 1 ? (
+                <>
+                  <div className="form-grid">
+                    <label className="full-field" htmlFor="share-profile">
+                      Perfil *
+                      <select id="share-profile" name="profile" required value={values.profile} onChange={updateValue} {...errorProps("profile")}>
+                        <option value="">Selecione</option>
+                        {profileOptions.map((option) => <option key={option}>{option}</option>)}
+                      </select>
+                      {fieldError("profile")}
+                    </label>
+                    <label htmlFor="share-name">
+                      Nome *
+                      <input id="share-name" name="name" required value={values.name} onChange={updateValue} autoComplete="name" {...errorProps("name")} />
+                      {fieldError("name")}
+                    </label>
+                    <label htmlFor="share-phone">
+                      Telefone/WhatsApp *
+                      <input id="share-phone" name="phone" required value={values.phone} onChange={updateValue} autoComplete="tel" inputMode="tel" {...errorProps("phone")} />
+                      {fieldError("phone")}
+                    </label>
+                    <label htmlFor="share-city">Cidade *<input id="share-city" name="city" required value={values.city} onChange={updateValue} autoComplete="address-level2" {...errorProps("city")} />{fieldError("city")}</label>
+                    <label htmlFor="share-state">Estado *<input id="share-state" name="state" required value={values.state} onChange={updateValue} maxLength="2" autoComplete="address-level1" {...errorProps("state")} />{fieldError("state")}</label>
+                    <label htmlFor="share-distributor">Distribuidora *<input id="share-distributor" name="distributor" required value={values.distributor} onChange={updateValue} autoComplete="organization" {...errorProps("distributor")} />{fieldError("distributor")}</label>
+                    <label htmlFor="share-bill">Valor médio da conta *<input id="share-bill" name="billValue" required value={values.billValue} onChange={updateValue} inputMode="decimal" placeholder="Ex.: R$ 801 a R$ 2.000" {...errorProps("billValue")} />{fieldError("billValue")}</label>
+                  </div>
+                  <div className="form-actions">
+                    <button className="btn btn-primary" type="button" onClick={handleCoreNext}>
+                      Continuar para dados complementares <ArrowRight aria-hidden="true" size={18} />
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="form-grid">
+                    <label className="full-field" htmlFor="share-email">
+                      E-mail *
+                      <input id="share-email" name="email" required type="email" value={values.email} onChange={updateValue} autoComplete="email" {...errorProps("email")} />
+                      {fieldError("email")}
+                    </label>
+                    <label htmlFor="share-unit">Tipo de unidade *<select id="share-unit" name="unitType" required value={values.unitType} onChange={updateValue} {...errorProps("unitType")}><option value="">Selecione</option>{unitOptions.map((option) => <option key={option}>{option}</option>)}</select>{fieldError("unitType")}</label>
+                    <label className="full-field" htmlFor="share-interest">Principal interesse *<select id="share-interest" name="interest" required value={values.interest} onChange={updateValue} {...errorProps("interest")}><option value="">Selecione</option>{interestOptions.map((option) => <option key={option}>{option}</option>)}</select>{fieldError("interest")}</label>
+                  </div>
+                  <div className="upload-note"><UploadCloud aria-hidden="true" /><span>A fatura poderá ser enviada pelo WhatsApp. Não há upload ativo sem backend seguro.</span></div>
+                  <label className="consent" htmlFor="share-consent">
+                    <input id="share-consent" name="consent" required type="checkbox" checked={values.consent} onChange={updateValue} {...errorProps("consent")} />
+                    <span>Concordo com o uso dos meus dados para contato e análise, conforme a <a href={siteConfig.privacyUrl}>Política de Privacidade</a>.</span>
+                  </label>
+                  {fieldError("consent")}
+                  <div className="form-actions">
+                    <button className="btn btn-outline" type="button" onClick={() => setFormStep(1)}>Voltar</button>
+                    <button className="btn btn-primary" type="submit">Analisar minha conta <ArrowRight aria-hidden="true" size={18} /></button>
+                  </div>
+                  <p className="microcopy">Seus dados serão utilizados somente para atendimento e análise da solicitação.</p>
+                </>
+              )}
             </form>
           )}
         </div>
@@ -893,23 +886,15 @@ function FAQ() {
 }
 
 function FinalCTA() {
-  return (
-    <section className="final-cta">
-      <div className="container final-cta-inner">
-        <div>
-          <p className="eyebrow">Próximo passo</p>
-          <h2>Descubra se sua conta pode participar</h2>
-          <p>Envie as informações da sua unidade e receba uma análise inicial da Renovera.</p>
-        </div>
-        <div className="cta-actions">
-          <ButtonLink href="#analise" icon={FileSearch}>Analisar minha conta</ButtonLink>
-          <ButtonLink href={getWhatsappHref("residential")} variant="outline-light" icon={MessageCircle} eventName={analyticsEvents.whatsappClick}>
-            Analisar minha conta no WhatsApp
-          </ButtonLink>
-        </div>
-      </div>
-    </section>
-  );
+  return <FinalParallaxCta
+    eyebrow="Próximo passo"
+    title="Descubra se sua conta pode participar."
+    description="Envie as informações da unidade para uma análise inicial da Renovera."
+    imageSrc="./images/official/compartilha/compartilha-solar-sunset.webp"
+    imagePosition="center 55%"
+    primaryAction={{ href: "#analise", label: "Analisar minha conta", onClick: () => track(analyticsEvents.heroAnalysisClick, { placement: "final_cta" }) }}
+    secondaryAction={{ href: getWhatsappHref("residential"), label: "Falar com um especialista", external: true, onClick: () => track(analyticsEvents.whatsappClick, { placement: "final_cta" }) }}
+  />;
 }
 
 function Footer() {
@@ -976,7 +961,6 @@ export default function App() {
           primaryAction={{ href: "#analise", label: "Analisar minha conta" }}
           secondaryAction={{ href: getWhatsappHref("residential"), label: "Analisar minha conta no WhatsApp", external: true, onClick: () => track(analyticsEvents.whatsappClick, { placement: "combined_insight" }) }}
           images={[
-            { src: "./images/official/compartilha/compartilha-home-energy.webp", srcSet: "./images/official/compartilha/compartilha-home-energy-960.webp 960w, ./images/official/compartilha/compartilha-home-energy.webp 1448w", alt: "Consumidora acompanhando a economia de energia em casa", width: 1448, height: 1086 },
             { src: "./images/official/compartilha/compartilha-energy-network.webp", srcSet: "./images/official/compartilha/compartilha-energy-network-960.webp 960w, ./images/official/compartilha/compartilha-energy-network.webp 1448w", alt: "Rede de energia conectando uma comunidade residencial", width: 1448, height: 1086 }
           ]}
         />

@@ -20,19 +20,19 @@ export const siteConfig = {
   businessHours: "Atendimento: Segunda a Sexta",
   services: [
     {
-      label: "Consultoria Regulatória",
-      href: "https://renovera.com.br/consultoria/"
-    },
-    {
-      label: "Design e Projetos Elétricos",
+      label: "Renovera Regulatória",
       href: "https://renovera.com.br/design/"
     },
     {
-      label: "Energia Solar",
+      label: "Projetos Elétricos",
+      href: "https://renovera.com.br/consultoria/"
+    },
+    {
+      label: "Solar",
       href: "https://renovera.com.br/solar/"
     },
     {
-      label: "Eletroposto",
+      label: "Renovera Charge",
       href: "https://renovera.com.br/eletroposto/"
     },
     {
