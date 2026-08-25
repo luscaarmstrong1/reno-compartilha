@@ -1220,3 +1220,24 @@ select[aria-invalid="true"] {
 .sharing-flow small { color: #c4f2cb; font-size: .62rem; }
 .sharing-flow__facts span { padding: 6px; border-radius: 5px; background: rgba(255,255,255,.12); font-size: .61rem; }
 @media (max-width: 760px) { .brand span { font-size: .6rem; } .sharing-flow { position: static; margin-top: 12px; } }
+
+/* Compact mobile rhythm and a shared Renovera closing section. */
+.final-cta { padding: clamp(56px, 7vw, 82px) 0; background: var(--renovera-brand-gradient); }
+.final-cta-inner { max-width: 880px; margin: 0 auto; flex-direction: column; text-align: center; }
+.final-cta h2 { margin-inline: auto; }
+.final-cta p { max-width: 620px; margin-inline: auto; }
+.final-cta .cta-actions { justify-content: center; }
+.final-cta .btn-primary { background: var(--gold); color: var(--gold-dark); }
+.final-cta .btn-outline-light { border-color: rgba(255,255,255,.42); background: rgba(255,255,255,.12); color: #fff; }
+
+@media (max-width: 760px) {
+  :root { --section: 48px; }
+  .hero { padding: 30px 0 38px; }
+  .visual-proof { padding: 48px 0; }
+  .visual-proof-grid { gap: 24px; }
+  .hero h1, .section h2, .final-cta h2 { letter-spacing: 0; }
+  .hero-media img { max-height: 310px; object-fit: cover; }
+  .final-cta { padding: 48px 0; }
+  .final-cta-inner { gap: 22px; }
+  .final-cta .cta-actions { width: 100%; }
+}
