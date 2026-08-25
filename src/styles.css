@@ -400,11 +400,7 @@ h3 {
   aspect-ratio: auto;
   border-radius: inherit;
   box-shadow: 0 20px 54px rgba(0, 53, 29, 0.14);
-  transition: transform 450ms ease;
-}
-
-.hero-media:hover img {
-  transform: scale(1.06);
+  cursor: zoom-in;
 }
 
 .trust-bar {
