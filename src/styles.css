@@ -1090,6 +1090,9 @@ select[aria-invalid="true"] {
     width: min(100% - 28px, var(--container));
   }
 
+  .hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .hero-media { display: none; min-height: 0; margin: 0; }
+
   .brand span {
     display: none;
   }

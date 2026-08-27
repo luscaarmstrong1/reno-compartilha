@@ -824,7 +824,7 @@ function AnalysisForm({ values, setValues }) {
                     <label htmlFor="share-unit">Tipo de unidade *<select id="share-unit" name="unitType" required value={values.unitType} onChange={updateValue} {...errorProps("unitType")}><option value="">Selecione</option>{unitOptions.map((option) => <option key={option}>{option}</option>)}</select>{fieldError("unitType")}</label>
                     <label className="full-field" htmlFor="share-interest">Principal interesse *<select id="share-interest" name="interest" required value={values.interest} onChange={updateValue} {...errorProps("interest")}><option value="">Selecione</option>{interestOptions.map((option) => <option key={option}>{option}</option>)}</select>{fieldError("interest")}</label>
                   </div>
-                  <div className="upload-note"><UploadCloud aria-hidden="true" /><span>A fatura poderá ser enviada pelo WhatsApp. Não há upload ativo sem backend seguro.</span></div>
+                  <div className="upload-note"><UploadCloud aria-hidden="true" /><span>A fatura poderá ser enviada pelo WhatsApp durante o atendimento.</span></div>
                   <label className="consent" htmlFor="share-consent">
                     <input id="share-consent" name="consent" required type="checkbox" checked={values.consent} onChange={updateValue} {...errorProps("consent")} />
                     <span>Concordo com o uso dos meus dados para contato e análise, conforme a <a href={siteConfig.privacyUrl}>Política de Privacidade</a>.</span>
@@ -965,7 +965,6 @@ export default function App() {
           ]}
         />
         <TrustBar />
-        <Qualifier onComplete={applyQualifier} />
         <Benefits />
         <HowItWorks />
         <Audience onAudienceClick={applyAudience} />
