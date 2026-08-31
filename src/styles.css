@@ -289,7 +289,7 @@ svg {
 
 .hero {
   overflow: hidden;
-  background: radial-gradient(circle at top left, rgba(252, 201, 73, 0.18), transparent 30%), linear-gradient(180deg, #ffffff 0%, var(--green-50) 100%);
+  background: radial-gradient(circle at 82% 16%, rgba(220, 177, 62, 0.24), transparent 34%), linear-gradient(135deg, #ffffff 0%, var(--green-50) 58%, #f5efd8 100%);
   padding: clamp(38px, 5vw, 66px) 0 clamp(30px, 5vw, 56px);
 }
 
@@ -400,14 +400,43 @@ h3 {
   color: var(--green-700);
 }
 
+.hero-share-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: 0 24px 58px rgba(0, 53, 29, 0.18);
+}
+
+.hero-share-media::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(112deg, rgba(5, 48, 29, 0.34), transparent 55%, rgba(181, 137, 36, 0.2));
+  pointer-events: none;
+}
+
 .hero-media img {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: var(--radius);
-  box-shadow: 0 20px 54px rgba(0, 53, 29, 0.14);
 }
+
+.share-flow { position: absolute; inset: 0; z-index: 1; color: #fff; pointer-events: none; }
+.share-line { position: absolute; height: 2px; transform-origin: left center; background: linear-gradient(90deg, rgba(244, 204, 89, 0.9), rgba(255, 255, 255, 0.45)); box-shadow: 0 0 16px rgba(244, 204, 89, 0.66); }
+.share-line-one { top: 43%; left: 22%; width: 36%; transform: rotate(9deg); }
+.share-line-two { top: 51%; left: 54%; width: 28%; transform: rotate(27deg); }
+.share-node { position: absolute; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(255,255,255,0.76); border-radius: 50%; background: rgba(7, 50, 30, 0.8); box-shadow: 0 0 0 8px rgba(238, 194, 77, 0.16), 0 10px 22px rgba(0, 31, 17, 0.3); }
+.share-node svg { width: 20px; height: 20px; color: #f4cc59; }
+.share-node-plant { top: 34%; left: 16%; }
+.share-node-grid { top: 39%; left: 54%; }
+.share-node-home { top: 61%; left: 72%; }
+.share-node-business { top: 27%; right: 8%; }
+.share-label { position: absolute; color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0; text-shadow: 0 1px 8px rgba(0, 29, 16, 0.76); }
+.share-label-plant { top: 54%; left: 13%; }
+.share-label-grid { top: 28%; left: 51%; }
+.share-label-consumers { right: 5%; bottom: 15%; max-width: 115px; text-align: center; }
 
 .trust-bar {
   background: var(--white);
@@ -1250,4 +1279,4 @@ select[aria-invalid="true"] {
 .floating-whatsapp { width: 56px; height: 56px; padding: 0; border-radius: 50%; background: #1f9d59; box-shadow: 0 12px 28px rgba(31, 157, 89, .32); transition: transform .2s ease, background .2s ease; }
 .floating-whatsapp:hover { background: #168448; transform: translateY(-3px); }
 .floating-whatsapp:focus-visible { outline: 3px solid #f2bf4a; outline-offset: 4px; }
-@media (max-width: 760px) { .brand span { font-size: .6rem; } .hero-media, .hero-media img { min-height: 300px; } .floating-whatsapp { right: 16px; bottom: 16px; width: 52px; height: 52px; } }
+@media (max-width: 760px) { .brand span { font-size: .6rem; } .hero-share-media { display: none; } .hero-grid { grid-template-columns: 1fr; } .floating-whatsapp { right: 16px; bottom: 16px; width: 52px; height: 52px; } }

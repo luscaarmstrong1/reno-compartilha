@@ -14,6 +14,8 @@ import MessageCircle from "lucide-react/dist/esm/icons/message-circle.js";
 import PanelsTopLeft from "lucide-react/dist/esm/icons/panels-top-left.js";
 import ReceiptText from "lucide-react/dist/esm/icons/receipt-text.js";
 import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
+import Sun from "lucide-react/dist/esm/icons/sun.js";
+import Network from "lucide-react/dist/esm/icons/network.js";
 import UploadCloud from "lucide-react/dist/esm/icons/upload-cloud.js";
 import X from "lucide-react/dist/esm/icons/x.js";
 import { analyticsEvents, siteConfig } from "./config/siteConfig";
@@ -288,7 +290,7 @@ function Hero() {
             <li><Check aria-hidden="true" /> acompanhamento da Renovera</li>
           </ul>
         </div>
-        <div className="hero-media" aria-label="Usina solar remota conectada a casas e empresas">
+        <div className="hero-media hero-share-media" aria-label="Usina solar remota conectada a casas e empresas">
           <img
             src="./reno-compartilha-hero-1280.webp"
             srcSet="./reno-compartilha-hero-960.webp 960w, ./reno-compartilha-hero-1280.webp 1280w, ./reno-compartilha-hero.webp 1680w"
@@ -299,6 +301,17 @@ function Hero() {
             decoding="async"
             fetchPriority="high"
           />
+          <div className="share-flow" aria-hidden="true">
+            <span className="share-line share-line-one" />
+            <span className="share-line share-line-two" />
+            <span className="share-node share-node-plant"><Sun /></span>
+            <span className="share-node share-node-grid"><Network /></span>
+            <span className="share-node share-node-home"><Home /></span>
+            <span className="share-node share-node-business"><Building2 /></span>
+            <span className="share-label share-label-plant">Geração</span>
+            <span className="share-label share-label-grid">Créditos</span>
+            <span className="share-label share-label-consumers">Unidades participantes</span>
+          </div>
         </div>
       </div>
     </section>
